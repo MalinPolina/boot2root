@@ -124,7 +124,7 @@ A little bit of snooping through the account we get lmezard's (or as it turns ou
 
 And here we have a list of other forum users:
 ```
-    Username [asc]	Type
+    Username [asc]  Type
     admin           Admin
     lmezard         User
     qudevide        User
@@ -455,11 +455,11 @@ do {
 Here the program awaits 6 numbers as input and from the hint we know that the second number is "2".
 With this calculating other numbers is trivial: 
 
-> 0: 1                      | 
-> 1: 1 * (1 + 1) = 2        |
-> 2: 2 * (2 + 1) = 6        | 
-> 3: 6 * (3 + 1) = 24       |
-> 4: 24 * (4 + 1) = 120     |
+> 0: 1                      | <br>
+> 1: 1 * (1 + 1) = 2        | <br>
+> 2: 2 * (2 + 1) = 6        | <br> 
+> 3: 6 * (3 + 1) = 24       | <br>
+> 4: 24 * (4 + 1) = 120     | <br>
 > 5: 120 * (5 + 1) = 720    |
 
 **Answer:** `1 2 6 24 120 720`
@@ -592,9 +592,9 @@ if (c != second)
 
 From this program we can see that the required input consists of 3 parts - number, letter and another number.
 From disassemply we know all correct inputs and the hint for this phase is "b" so we have 3 possible answers:
-> 1 b 214
-> 2 b 755
-> 7 b 524
+> - 1 b 214
+> - 2 b 755
+> - 7 b 524
 
 *This unfortunately makes finding the password for thor difficult*
 
@@ -777,14 +777,14 @@ int main() {
 }
 ```
 
-> abcdefghijklmnopqrstuvwxyz
+> abcdefghijklmnopqrstuvwxyz <br>
 > srveawhobpnutfgisrveawhobp
 
 As some letters are repeated there are 4 different encodings for giant:
-> opekma
-> opekma
-> opekmq
-> opukmq
+> - opekma
+> - opekma
+> - opekmq
+> - opukmq
 
 *Another level with several possible options for password. Fun*
 
@@ -913,22 +913,22 @@ As the hint for this phase is "4" and node4 is the biggest so let's sort numbers
 
 #### Diffusing the bomb
 
-> HINT:
-> P
->  2
->  b
-> 
-> o
+> HINT: <br>
+> P     <br>
+>  2    <br>
+>  b    <br>
+>       <br>
+> o     <br>
 > 4
 
 Final answers:
 
-> 1) Public speaking is very easy.  
-> 2) 1 2 6 24 120 720
-> 3) 1 b 214 || 2 b 755 || 7 b 524
-> 4) 9
-> 5) opukmq || opekma || opukma || opekmq
-> 6) 4 2 6 3 1 5 
+> 1. Public speaking is very easy.  
+> 2. 1 2 6 24 120 720
+> 3. 1 b 214 || 2 b 755 || 7 b 524
+> 4. 9
+> 5. opukmq || opekma || opukma || opekmq
+> 6. 4 2 6 3 1 5 
 
 ```
 laurie@BornToSecHackMe:~$ ./bomb
