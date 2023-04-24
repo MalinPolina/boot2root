@@ -287,7 +287,28 @@ We got 2 files out of this "REDME" and "fun":
     //file679
 ```
 This fake .pcap files are numbered and have what looks to be parts of code in them.
-If we sort .pcap files by their numbers with `not_pcap_sort.py` script we get a program like this (shortened for convenience):
+
+```
+# ! /usr/bin/env python3
+import os
+import re
+import sys
+
+dict = {}
+
+
+for filename in os.listdir("/path/to/ft_fun"):
+    with open(os.path.join("/path/to/ft_fun", filename)) as f:
+        txt = f.read()
+        f.close()
+        nbr_line = re.search(r'//file([0-9]*)', txt)
+        dict[int(nbr_line.group(1))] = txt
+                          
+for k, v in sorted(dict.items()):
+    print(v)
+```
+
+If we sort .pcap files by their numbers with a script above we get a program like this (shortened for convenience):
 
 ```
 char getme1() {
@@ -770,7 +791,7 @@ int main() {
         while (i <= 25) {
                 int idx = str[i] & 0xf;
                 res[i] = key[idx];
-                i++;
+                ++i;
         }
         printf("%s\n", res);
         return 0;
