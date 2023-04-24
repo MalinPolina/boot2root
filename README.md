@@ -3,15 +3,16 @@ Ecole 42 project
 
 Note: Тут много черновиков, которые надо до/написать
 
-> Writeups
->
->       **Name**                    **Status**          **Comments**
-> 1.    Planned way                 Done                Check and maybe add pictures - P
-> 2.    DirtyCow                    InProcess: writing  L is on it
-> 3.    Apache suExec               0
-> 4.    Another DirtyCow            0                   L
-> 5.    Zaz - ret2libc              Done                Check - P
-> 6.    p0wny_shell                 0                   L
-> 7.    Server exploit              Negative            any new Server exploits
-> 8.    Shift+Tab                   0                   Cheat
-> 9.    Crack iso                   0                   Cheat
+## Writeups
+
+| **Number** | **What**       | **Who**  | **Status** | **Comments**             |
+|------------|----------------|----------|------------|--------------------------|
+| 1          | Planned        | daniseed | Done       | Check and maybe pictures |
+| 2          | DirtyCow       | rvinnie  | InProcess  |                          |
+| 3          | Apache suExec  |          | Nothing    |                          |
+| 4          | Another DC     | rvinnie  | Nothing    |                          |
+| 5          | Zaz - ret2libc | daniseed | Done       | Check                    |
+| 6          | p0wny_shell    | rvinnie  | Nothing    |                          |
+| 7          | Anything else  |          | Nothing    |                          |
+| 8*         | Shift + tab    |          | ???        | Cheat                    |
+| 9*         | Crack iso      |          | ???        | Cheat                    |
