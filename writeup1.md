@@ -968,26 +968,10 @@ Good work!  On to the next...
 4 2 6 3 1 5
 Congratulations! You've defused the bomb!
 ```
-The problem is that all these variations work for diffusing the bomb and so we will have to try several possible passwords to become `thor`:
+The problem is that all these variations work for diffusing the bomb and so we will have to try several possible passwords to become `thor`.
 
-Possible passwords:
-```
-Publicspeakingisveryeasy.126241207201b2149opukmq426315  -> No
-Publicspeakingisveryeasy.126241207201b2149opekma426315  -> No
-Publicspeakingisveryeasy.126241207201b2149opukma426315  -> No
-Publicspeakingisveryeasy.126241207201b2149opekmq426315  -> No
-Publicspeakingisveryeasy.126241207202b7559opukmq426315  -> No
-Publicspeakingisveryeasy.126241207202b7559opekma426315  -> No
-Publicspeakingisveryeasy.126241207202b7559opukma426315  -> No
-Publicspeakingisveryeasy.126241207202b7559opekmq426315  -> No
-Publicspeakingisveryeasy.126241207207b5249opukmq426315  -> No
-Publicspeakingisveryeasy.126241207207b5249opekma426315  -> No
-Publicspeakingisveryeasy.126241207207b5249opukma426315  -> No
-Publicspeakingisveryeasy.126241207207b5249opekmq426315  -> No
-```
-
-So none of the possible passwords work. As it turns out there is an error in phase_6 answer.
-It should be `4 2 6 1 3 5`
+So none of the possible passwords work. As it turns out there is an error in phase_6 answer. Information in the subject tells us that "if the password found is 123456, the password to use is 123546".
+So the answer to phase_6 should be `4 2 6 1 3 5`
 
 Time to try this once again...
 This worked:
