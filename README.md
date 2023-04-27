@@ -8,11 +8,11 @@ Note: Тут много черновиков, которые надо до/на�
 | **Number** | **What**       | **Who**  | **Status** | **Comments**             |
 |------------|----------------|----------|------------|--------------------------|
 | 1          | Planned        | daniseed | Done       | Check and maybe pictures |
-| 2          | DirtyCow       | rvinnie  | InProcess  |                          |
+| 2          | DirtyCow       | rvinnie  | Done       | Check                    |
 | 3          | Apache suExec  |          | Nothing    |                          |
-| 4          | Another DC     | rvinnie  | Nothing    |                          |
+| 4          | Another DC     | rvinnie  | InProcess  |                          |
 | 5          | Zaz - ret2libc | daniseed | Done       | Check                    |
-| 6          | p0wny_shell    | rvinnie  | Nothing    |                          |
+| 6          | p0wny_shell    | rvinnie  | InProcess  |                          |
 | 7          | Anything else  |          | Nothing    |                          |
 | 8*         | Shift + tab    |          | ???        | Cheat                    |
 | 9*         | Crack iso      |          | ???        | Cheat                    |
