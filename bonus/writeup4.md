@@ -1,5 +1,4 @@
-# Writeup 4
-**Another dirty cow!**  
+# Bonus: Another dirty cow!    
 We start with writeup1 after logging in as **laurie**.  
 We will use the Dirty Cow exploit again, with another way. With the exploit c0w.c.  
 We have to uncomment the correct payload for x86 inside the cow code.    
