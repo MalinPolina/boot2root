@@ -2,6 +2,8 @@ Apache is running with the version 2.2.22
 
 After some research, we found this version is vulnerable. The suEXEC vulnerability is a path traversal. We can do a symlink with / and a php page to access a files the user www-data can read
 
+Path checking code design error, subdirectory entry is determined via strncmp(), i.e. in addition to the directory "/var/www/html" described in the configuration, the check will also be successful for "/var/www/html_backup" or "/var/www/htmleditor".
+
 We can found an exploit here : exploit-db.com/exploits/27397
 
 We can exploit it by uploading a PHP page (with a SQL request in phpmyadmin like in the writeup2)
