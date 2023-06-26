@@ -1,18 +1,13 @@
 # boot2root
-Ecole 42 project
+This project is the basis for understanding how we must proceed in order to infiltrate a system to which we have legal rights.
 
-Note: Тут много черновиков, которые надо до/написать
+The idea of the project is that we are given a virtual machine that needs to be hacked in different ways. See writeup files...
 
-## Writeups
+## Bonus Writeups
 
-| **Number** | **What**       | **Who**  | **Status** | **Comments**             |
-|------------|----------------|----------|------------|--------------------------|
-| 1          | Planned        | daniseed | Done       | Check and maybe pictures |
-| 2          | DirtyCow       | rvinnie  | Done       | Check                    |
-| 3          | Apache suExec  |          | Nothing    |                          |
-| 4          | Another DC     | rvinnie  | Done       | Check                    |
-| 5          | Zaz - ret2libc | daniseed | Done       | Check                    |
-| 6          | p0wny_shell    | rvinnie  | InProcess  |                          |
-| 7          | Anything else  |          | Nothing    |                          |
-| 8*         | Shift + tab    |          | ???        | Cheat                    |
-| 9*         | Crack iso      |          | ???        | Cheat                    |
+| **Number** | **What**       | **Who**  | **Status** |
+|------------|----------------|----------|------------|
+| 1          | DirtyCow       | rvinnie  | Done       |
+| 2          | Apache suExec  | daniseed | Done       |
+| 3          | Another DC     | rvinnie  | Done       |
+| 4          | Zaz - ret2libc | daniseed | Done       |
