@@ -7,7 +7,9 @@ The idea of the project is that we are given a virtual machine that needs to be 
 
 | **Number** | **What**       | **Who**  | **Status** |
 |------------|----------------|----------|------------|
-| 1          | DirtyCow       | rvinnie  | Done       |
-| 2          | Apache suExec  | daniseed | Done       |
-| 3          | Another DC     | rvinnie  | Done       |
-| 4          | Zaz - ret2libc | daniseed | Done       |
+| 1          | Writeup1       | daniseed | Done       |
+| 2          | Writeup2       | rvinnie  | Done       |
+| 3          | DirtyCow       | rvinnie  | Done       |
+| 4          | Apache suExec  | Georgik0 | Done       |
+| 5          | Another DC     | rvinnie  | Done       |
+| 6          | Zaz - ret2libc | daniseed | Done       |
